@@ -1,0 +1,355 @@
+training_id,skill,title,description,provider,hours,price,rating,link
+T0001,java,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=java
+T0002,java,Learn Java,Description not available,Codecademy,17.0,unknown,,https://www.codecademy.com/learn/learn-java
+T0003,java,Java Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/java/
+T0004,java,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,java,Java Programming Fundamentals Specialization,Description not available,Coursera,,unknown,,https://www.coursera.org/specializations/java-programming-fundamentals
+T0001,python,Python courses,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/catalog/language/python
+T0002,python,Python Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/python/?srsltid=AfmBOopNf3VG0finIbrjHuA0RzMVO76qtl-vmc59zu0e7BFtiV094rh3
+T0003,python,Learn Python with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/python
+T0004,python,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=python
+T0005,python,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0001,javascript,Learn JavaScript,Description not available,Codecademy,15.0,unknown,,https://www.codecademy.com/learn/introduction-to-javascript
+T0002,javascript,Learn JavaScript – Free JS Courses for Beginners,Description not available,Freecodecamp,1.0,unknown,,https://www.freecodecamp.org/news/learn-javascript-free-js-courses-for-beginners/
+T0003,javascript,Learn JavaScript,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/learn-javascript
+T0004,javascript,JavaScript Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/javascript/?srsltid=AfmBOookFM6uFgT47vBtzbNLtuviNdmMnJ_1cGMlVLSGyrNT0KFa8re2
+T0005,javascript,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=javascript
+T0001,vue,Vue JS Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/vue-js/?srsltid=AfmBOooz4kEmR9XiHS21CU7yTtzwj5j4hBrH-ivYn61QZrA3g138Lpum
+T0002,vue,Learn Vue.js,Description not available,Codecademy,4.0,unknown,,https://www.codecademy.com/learn/learn-vue-js
+T0003,vue,Vue - The Complete Guide (incl. Router & Composition API),Description not available,Udemy,,unknown,,https://www.udemy.com/course/vuejs-2-the-complete-guide/?srsltid=AfmBOoprA6zmuMC3mq55fnMkH-Tx-I_Yvyw-E-I971LZHveB5yk7ElSZ
+T0004,vue,Vue JS Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/vue-js/?srsltid=AfmBOoqtAJoe6mnE2dj3W-WA0Ikf7wAIrmpqrfGHzA91S_qx49rzBTF2
+T0005,vue,"Complete Vue Developer Bootcamp (Pinia, Vitest)",Description not available,Udemy,,unknown,,https://www.udemy.com/course/complete-vue-js-developer-zero-to-mastery-vuex/?srsltid=AfmBOoo4ADd7UIWkMC2lHpOGNDcCoMsIZhwK7PzqKXwgyJpsYFDXQqqB
+T0001,angular,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=angular
+T0002,angular,Angular Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/angular/
+T0003,angular,The Complete Angular Course: Basic to Advanced (2025),Description not available,Udemy,,unknown,,https://www.udemy.com/course/master-full-stack-web-development-with-manish-methani/
+T0004,angular,Angular - The Complete Guide (2025 Edition),Description not available,Udemy,,unknown,,https://www.udemy.com/course/the-complete-guide-to-angular-2/
+T0005,angular,Complete Angular Course 2025 - Master Angular in only 6 days,Description not available,Udemy,,unknown,,https://www.udemy.com/course/complete-angular-14-course-learn-frontend-development/
+T0001,react,React JS Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/react/?srsltid=AfmBOop1sbhLZN2CRHZhcpQxZUJZ0KNIraCZtj348_ODO2Az8_u9Nex_
+T0002,react,Learn React,Description not available,Codecademy,13.0,unknown,,https://www.codecademy.com/learn/react-101
+T0003,react,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=react
+T0004,react,React Basics,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/react-basics
+T0005,react,"React - The Complete Guide 2025 (incl. Next.js, Redux)",Description not available,Udemy,,unknown,,https://www.udemy.com/course/react-the-complete-guide-incl-redux/
+T0001,node.js,Learn Node.js,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/learn/learn-node-js
+T0002,node.js,Node.Js Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/nodejs/?srsltid=AfmBOopbW98pwDvXP7uJ2gLW2CeByTU9tm_12KsgT445Jj5kVsMTeS0V
+T0003,node.js,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0004,node.js,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0005,node.js,Popular and trending topics,Description not available,Udemy,,unknown,,https://www.udemy.com/featured-topics/
+T0001,mysql,MySQL Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/mysql/?srsltid=AfmBOoqQaqz1d4mjtaHgdxyC34Bqf2Y2xnxh2hGpBUof1ycvx1VqzGZN
+T0002,mysql,The Ultimate MySQL Bootcamp: Go from SQL Beginner to Expert,Description not available,Udemy,,unknown,,https://www.udemy.com/course/the-ultimate-mysql-bootcamp-go-from-sql-beginner-to-expert/?srsltid=AfmBOop7GKJcUI5kC_mUyfcXoZR32aeh6JeTl5NE1LZYHM0KEHudVFQg
+T0003,mysql,"Mastering MYSQL: Database Creation, Management & SQL Queries",Description not available,Udemy,,unknown,,https://www.udemy.com/course/mastering-mysql-database-creation-management-sql-queries/?srsltid=AfmBOooPAFPqikrb6EUGdBW4y3vCiP-aAKEu1B5m_9E_y7GfPPxDBFKi
+T0004,mysql,SQL - MySQL for Data Analytics and Business Intelligence,Description not available,Udemy,,unknown,,https://www.udemy.com/course/sql-mysql-for-data-analytics-and-business-intelligence/?srsltid=AfmBOoqcCxc9UQn1-DFclI7bCs9-EBHSIie8AMMJXkhmrcHV5YNRsBEX
+T0005,mysql,The Complete MySQL Bootcamp: Go from Beginner to Expert,Description not available,Udemy,,unknown,,https://www.udemy.com/course/the-complete-mysql-bootcamp-go-from-beginner-to-expert/?srsltid=AfmBOooCw6BYF84_nh9cb-duAzex6okbRv6_xF0PFCe3Amxkc7gw1BL2
+T0001,sql,Learn SQL,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/learn/learn-sql
+T0002,sql,SQL Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/sql/?srsltid=AfmBOorp3YCTl6dH34yqaI1xyZNeVtc1NmdIDyPkRlPHrxigwye7SZ0Q
+T0003,sql,SQL courses,Description not available,Datacamp,26.0,unknown,,https://www.datacamp.com/category/sql
+T0004,sql,The Complete SQL Bootcamp: Go from Zero to Hero,Description not available,Udemy,,unknown,,https://www.udemy.com/course/the-complete-sql-bootcamp/
+T0005,sql,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=sql
+T0001,postgresql,Learn PostgreSQL with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/postgresql
+T0002,postgresql,PostgreSQL Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/postgresql/?srsltid=AfmBOoq_7PPaI5jGX0DsIcY4SsCPLvSDMzCKq-SACulOZ2NPmWl65GGd
+T0003,postgresql,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/certificates/professional-certificate/michiganx-postgresql-for-everybody
+T0004,postgresql,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/learn/databases/the-university-of-michigan-database-design-and-basic-sql-in-postgresql
+T0005,postgresql,SQL and PostgreSQL for Beginners: Become a SQL Expert,Description not available,Udemy,,unknown,,https://www.udemy.com/course/sql-and-postgresql-for-beginners/?srsltid=AfmBOoq4A4Sj5ovK1z85Vs_gddvWZlsOPU7ej6p0E2ogXnnAm12hgOdO
+T0001,aws,Amazon AWS Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/amazon-aws/?srsltid=AfmBOooOg_IHC8JSi4Mz0VimiiWD0EWrcZqWXsd4xqYO19nZ9_6U_3xW
+T0001,mongodb,Learn MongoDB with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/mongodb
+T0002,mongodb,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=mongodb
+T0003,mongodb,MongoDB Certification Training (beginner to expert),Description not available,Udemy,,unknown,,https://www.udemy.com/course/mongodb-online-training/
+T0004,mongodb,Introduction to MongoDB,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/introduction-to-mongodb
+T0005,mongodb,MongoDB - The Complete MongoDB Developers Course,Description not available,Udemy,,unknown,,https://www.udemy.com/course/mongodb-the-complete-mongodb-developers-course/
+T0001,azure,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0002,azure,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0003,azure,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0004,azure,Course Title Not Found,Description not available,Udemy,,unknown,,https://support.udemy.com/hc/en-us/articles/229232187-Learning-With-Udemy-Frequently-Asked-Questions
+T0005,azure,"World-Class Learning for Anyone, Anywhere",Description not available,Coursera,,unknown,,https://about.coursera.org/how-coursera-works/
+T0001,gcp,Google Cloud Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/google-cloud/?srsltid=AfmBOoo2L5OANzAIfE3BgO9g_0nNz8opU4i3bj91ph05lYwyu1LbRtKU
+T0002,gcp,Pluralsight and GCP: Google Cloud training for pros,Description not available,Pluralsight,,unknown,,https://www.pluralsight.com/browse/gcp-cloud-training
+T0003,gcp,Google Cloud Platform (GCP) Fundamentals for Beginners,Description not available,Udemy,,unknown,,https://www.udemy.com/course/google-cloud-platform-gcp-fundamentals-for-beginners/?srsltid=AfmBOor2LK-dmYngMweN0UNPWl6dpRoke54eTRk8kKMwec6tDFitSmMj
+T0004,gcp,GCP Associate Cloud Engineer - Google Cloud Certification,Description not available,Udemy,,unknown,,https://www.udemy.com/course/google-cloud-certification-associate-cloud-engineer/?srsltid=AfmBOor-9vHLl0xl7m_XgA0HJlnIVKV9uyeILX4vKKrmmcoUDrQisT0l
+T0001,docker,The Complete Docker Certification (DCA) Guide for 2025,Description not available,Datacamp,4.0,unknown,,https://www.datacamp.com/blog/introduction-to-docker-certification
+T0002,docker,Docker​ Certified​ Associate (DCA) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/docker-certified-associate-dca/?srsltid=AfmBOopa7JQu7TdHy4jzPdnxjMMrJ6FNUyZPku5fdz3K3CodOykVY8GE
+T0003,docker,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0004,docker,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0005,docker,Certification Preparation,Description not available,Udemy,,unknown,,https://www.udemy.com/browse/certification/
+T0001,kubernetes,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=kubernetes
+T0002,kubernetes,Kubernetes Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/kubernetes/
+T0003,kubernetes,Certified Kubernetes Administrator (CKA) with Practice Tests,Description not available,Udemy,,unknown,,https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/
+T0004,kubernetes,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,kubernetes,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0001,tensorflow,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=tensorflow
+T0002,tensorflow,DeepLearning.AI TensorFlow Developer Professional Certificate,Description not available,Coursera,,unknown,,https://www.coursera.org/professional-certificates/tensorflow-in-practice
+T0003,tensorflow,Learn Tensorflow with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/tensorflow
+T0004,tensorflow,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/learn/deep-learning/ibm-deep-learning-with-tensorflow-and-keras
+T0005,tensorflow,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/learn/javascript/google-google-ai-for-javascript-developers-with-tensorflow-js
+T0001,pytorch,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=pytorch
+T0002,pytorch,Learn PyTorch for Deep Learning – Free 26-Hour Course,Description not available,Freecodecamp,26.0,unknown,,https://www.freecodecamp.org/news/learn-pytorch-for-deep-learning-in-day/
+T0003,pytorch,Learn PyTorch with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/pytorch
+T0004,pytorch,Introduction to Neural Networks and PyTorch,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/deep-neural-networks-with-pytorch
+T0005,pytorch,PyTorch for Deep Learning Bootcamp,Description not available,Udemy,,unknown,,https://www.udemy.com/course/pytorch-for-deep-learning/
+T0001,scikit-learn,Supervised Learning with scikit-learn,Description not available,Datacamp,3.0,unknown,,https://www.datacamp.com/courses/supervised-learning-with-scikit-learn
+T0002,scikit-learn,What Is scikit-learn?,Description not available,Coursera,,unknown,,https://www.coursera.org/articles/what-is-scikit-learn
+T0003,scikit-learn,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=scikit+learn
+T0004,scikit-learn,Scikit-learn Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/scikit-learn/
+T0005,scikit-learn,Learn scikit-learn with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/scikit-learn
+T0001,pandas,Learn Pandas & Python for Data Analysis [Full Course],Description not available,Freecodecamp,,unknown,,https://www.freecodecamp.org/news/learn-pandas-for-data-science/
+T0002,pandas,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=python+pandas
+T0003,pandas,Pandas Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/pandas/?p=1
+T0001,numpy,Introduction to NumPy,Description not available,Datacamp,16.0,unknown,,https://www.datacamp.com/courses/introduction-to-numpy
+T0002,numpy,NumPy Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/numpy/
+T0003,numpy,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=numpy
+T0001,deep learning,Deep Learning Full Course For Beginners,Description not available,Udemy,,unknown,,https://www.udemy.com/course/deep-learning-mastery-from-zero-to-hero/
+T0002,deep learning,Generative AI for Everyone,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/generative-ai-for-everyone
+T0003,deep learning,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/certificates/professional-certificate/ibm-deep-learning
+T0001,machine learning,Supervised Machine Learning: Regression and Classification,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/machine-learning
+T0002,machine learning,A Guide to The Top Machine Learning Certifications For 2025,Description not available,Datacamp,9.0,unknown,,https://www.datacamp.com/blog/top-machine-learning-certifications
+T0003,machine learning,Machine Learning Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/machine-learning/?srsltid=AfmBOooMWPpASL6ZTMXgw-wiJVSsfrPTaC0AFzBAgflw34NTcXz0g0E4
+T0004,machine learning,Stanford Online,Description not available,Coursera,,unknown,,https://eventing.coursera.org/redirectSigned/eyJrZXkiOiJlbWFpbC5saW5rLm9wZW4iLCJ2YWx1ZSI6eyJ1cmwiOiJodHRwczovL29ubGluZS5zdGFuZm9yZC5lZHUvY291cnNlcy9jczIyOS1tYWNoaW5lLWxlYXJuaW5nP3V0bV9zb3VyY2U9Q291cnNlcmEmdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249U3VtbWVyMjNfR3JhZEVucm9sbG1lbnQiLCJ0cmFja2luZyI6eyJ1c2VySWQiOjU2NjEyNDIzLCJ1c2VyRW1haWwiOiJzYW5kcmFAdmVyc2FuLm9yZyIsIm5vdGlmaWNhdGlvblR5cGUiOiJvcGVuY291cnNlLnRhcmdldGVkbWVzc2FnZXMubWFya2V0aW5nIiwiY2FtcGFpZ25JZCI6InBhcnRuZXIuMS4tUlBWZFZITFFRS1dielhoaXNmb2pBIiwiY2FtcGFpZ25Hcm91cCI6InBhcnRuZXIuMS5vcGVuY291cnNlLnRhcmdldGVkbWVzc2FnZXMubWFya2V0aW5nIiwibGlua3MiOltdfX0sInVzZXJJZCI6NTY2MTI0MjN9._T0J55j3ds0Xivg2mkIKqrZig_6vkvq6TC4N9dRlU2M
+T0005,machine learning,"Machine Learning A-Z: AI, Python & R + ChatGPT Prize [2025]",Description not available,Udemy,,unknown,,https://www.udemy.com/course/machinelearning/?srsltid=AfmBOoou8zlEN8CbyKJVoTG9WcClS4kqkYJLNy0AulgvPLdLVen_8fsM
+T0001,data science,Course Title Not Found,Description not available,Datacamp,,unknown,,https://www.datacamp.com/users/sign_in
+T0002,data science,Learn data science: How to get started,Description not available,Edx,,unknown,,https://www.edx.org/learn/data-science
+T0003,data science,Learn data and AI skills,Description not available,Datacamp,4.0,unknown,,https://www.datacamp.com/
+T0004,data science,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,data science,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0001,data analysis,Google Advanced Data Analytics Professional Certificate,Description not available,Coursera,,unknown,,https://www.coursera.org/professional-certificates/google-advanced-data-analytics
+T0002,data analysis,"Data, AI, and Cloud Courses",Description not available,Datacamp,3.0,unknown,,https://www.datacamp.com/courses-all
+T0003,data analysis,Data analysis courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/data-analysis
+T0004,data analysis,Google Data Analytics Professional Certificate,Description not available,Coursera,,unknown,,https://www.coursera.org/professional-certificates/google-data-analytics
+T0005,data analysis,Data Analyst Certification,Description not available,Datacamp,2.0,unknown,,https://www.datacamp.com/certification/data-analyst
+T0001,web development,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=web+development
+T0002,web development,Web Development Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/web-development/?srsltid=AfmBOop2wMcjB_8NI-k5PfyIp7EeZjGySE_p4OCOfEA6Z-udbPvhe8yd
+T0003,web development,Web Development Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/development/web-development/?srsltid=AfmBOoozfJSUubDkIPJzhPj-Xouwaq_7_iQFRSyJbJYM_cI4f3V_3_Ei
+T0004,web development,The Complete Full-Stack Web Development Bootcamp,Description not available,Udemy,,unknown,,https://www.udemy.com/course/the-complete-web-development-bootcamp/?srsltid=AfmBOor10jNkpTvILHTUPE9mwxdUGrzFVvFHKLzT2YumJkfu6jNsuGWY
+T0005,web development,Learn web development,Description not available,Edx,,unknown,,https://www.edx.org/learn/web-development
+T0001,mobile development,Mobile development courses,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/catalog/subject/mobile-development
+T0002,mobile development,Mobile App Development Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/mobile-development/?srsltid=AfmBOoruAb3dwLp3t_1XcnN37izeLiYe06cwIpRGoXi5NgoUVT_bgvF4
+T0003,mobile development,Mobile Development Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/development/mobile-apps/?srsltid=AfmBOoooPpfMr83BFC2QnUD-q5zCI7nFCsVr2ztrawXjUyZds_qEpg2e
+T0004,mobile development,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=mobile+app+development
+T0005,mobile development,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0001,devops,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=devops
+T0002,devops,DevOps Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/devops/
+T0003,devops,Learn about DevOps,Description not available,Edx,,unknown,,https://www.edx.org/learn/devops
+T0001,cybersecurity,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=free
+T0002,cybersecurity,Learn cybersecurity with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/cybersecurity?term=&plp=true&eaid=1ee70732-5c76-4cd1-968d-f1abae41172e
+T0001,cloud computing,Introduction to Cloud Computing,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/introduction-to-cloud
+T0002,cloud computing,Cloud courses,Description not available,Datacamp,2.0,unknown,,https://www.datacamp.com/category/cloud
+T0003,cloud computing,Cloud Computing Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/cloud-computing/?srsltid=AfmBOorn4Z2BZwTeg7drTwCGhM1e8DeXbjaVzfyQh0qTsrl__xrl3Hra
+T0004,cloud computing,Learn cloud computing,Description not available,Edx,,unknown,,https://www.edx.org/learn/cloud-computing
+T0005,cloud computing,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0001,ai,"What Is Artificial Intelligence? Definition, Uses, and Types",Description not available,Coursera,,unknown,,https://www.coursera.org/articles/what-is-artificial-intelligence?msockid=0503cc6f280361800dbeda23298f6084
+T0002,ai,"What Is Artificial Intelligence? Definition, Uses, and Types",Description not available,Coursera,,unknown,,https://www.coursera.org/articles/what-is-artificial-intelligence
+T0003,ai,Artificial Intelligence (AI) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/artificial-intelligence/
+T0004,ai,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=artificial+intelligence
+T0005,ai,Oracle Cloud Infrastructure AI Foundations,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/oracle-cloud-infrastructure-ai-foundations
+T0001,blockchain,Blockchain Basics,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/blockchain-basics
+T0002,blockchain,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=blockchain
+T0003,blockchain,Learn blockchain,Description not available,Edx,,unknown,,https://www.edx.org/learn/blockchain
+T0001,nlp,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=nlp
+T0002,nlp,Natural Language Processing Specialization,Description not available,Coursera,,unknown,,https://www.coursera.org/specializations/natural-language-processing
+T0003,nlp,Learn Natural Language Processing with Online Courses and Programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/natural-language-processing
+T0004,nlp,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,nlp,Free online courses to achieve your goals,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/free/
+T0001,computer vision,Computer Vision Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/computer-vision/?srsltid=AfmBOor1pmmwYA7mxzWJGXZ-bzMZyTo4NqTFUByWzPBi5pi_6mdVWnaE
+T0002,computer vision,Learn computer vision with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/computer-vision
+T0001,jenkins,Jenkins training for Beginners,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/jenkins-training-for-beginners
+T0002,jenkins,Learn Jenkins with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/jenkins
+T0001,git,A Beginner’s Guide to VCS and Git,Description not available,Futurelearn,2.0,unknown,,https://www.futurelearn.com/courses/a-beginners-guide-to-vcs-and-git
+T0002,git,Git: Become an Expert in Git & GitHub in 4 Hours,Description not available,Udemy,,unknown,,https://www.udemy.com/course/git-expert-4-hours/?srsltid=AfmBOooQw8I4yxqvDBAgGEmbW8S_wu2_R2vNlRfww8Xz0GsBi5IFlu9D
+T0003,git,Git & GitHub Crash Course: Create a Repository From Scratch!,Description not available,Udemy,,unknown,,https://www.udemy.com/course/git-and-github-crash-course-creating-a-repository-from-scratch/?srsltid=AfmBOordLpOx6DtQ5LFRBZu9S2ZUzC2n6n0qQ3tUyNXaFGutMuj5FXj5
+T0004,git,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/learn/github/ibm-git-and-github-basics
+T0005,git,Learn Git,Description not available,Edx,,unknown,,https://www.edx.org/learn/git
+T0001,agile,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=agile
+T0002,agile,Learn Agile software development with online courses,Description not available,Edx,,unknown,,https://www.edx.org/learn/agile-software-development
+T0003,agile,Learn Agile project management,Description not available,Edx,,unknown,,https://www.edx.org/learn/agile-project-management
+T0001,scrum,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=scrum
+T0002,scrum,"Agile Scrum Mastery: PSM 1, Cert. Scrum Master & Project Mgm",Description not available,Udemy,,unknown,,https://www.udemy.com/course/scrum-master-test-guide/?data_h=BUAecVdUTHQ=&deal_code=MEMBERSONLY2
+T0003,scrum,How to Get a PMP Certification: An Overview,Description not available,Coursera,,unknown,,https://www.coursera.org/articles/the-pmp-certification-a-guide-to-getting-started
+T0001,rest api,REST API Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/rest-api/?srsltid=AfmBOop_wZbGF5Pw7FtcFoQUVZX2onM-jqyspbhgvtclstvNLeILe0Kq
+T0002,rest api,REST API Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/rest-api/?srsltid=AfmBOorl6MjU7HeiW4SeJsHpLUslYLDK13n6H1trEdYOnFxpNPmA8mqi
+T0003,rest api,Learn about REST APIs with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/rest-api
+T0004,rest api,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=restful+api
+T0005,rest api,REST API Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/rest-api/
+T0001,graphql,GraphQL by Example,Description not available,Udemy,,unknown,,https://www.udemy.com/course/graphql-by-example/?couponCode=OVER50K
+T0002,graphql,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0003,graphql,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0004,graphql,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0005,graphql,Free online courses to achieve your goals,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/free/
+T0001,ci/cd,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0002,ci/cd,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0003,ci/cd,Free online courses to achieve your goals,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/free/
+T0004,ci/cd,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0005,ci/cd,"World-Class Learning for Anyone, Anywhere",Description not available,Coursera,,unknown,,https://about.coursera.org/how-coursera-works/
+T0001,microservices,Course Title Not Found,Description not available,Coursera,,unknown,,"https://www.coursera.org/courses?_facet_changed_=true&query=microservices#!&languages=en&primaryLanguages=en,fr"
+T0002,microservices,Microservices Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/microservices/?couponCode=FREEJULY326
+T0003,microservices,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0004,microservices,Free online courses to achieve your goals,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/free/
+T0005,microservices,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0001,linux,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0002,linux,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0003,linux,Popular and trending topics,Description not available,Udemy,,unknown,,https://www.udemy.com/featured-topics/
+T0004,linux,Free online courses to achieve your goals,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/free/
+T0001,windows,Microsoft Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/office-productivity/microsoft/?srsltid=AfmBOorSztgDAlUDQvW38deR0KiKPlZfZ66k3PCneVciAK4SOYhEG1Rf
+T0002,windows,Microsoft Windows Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/microsoft-windows/?srsltid=AfmBOoqH5MlYY69ikUgR02ymfjSh60JJJJdQQAj_i-fSj_zXb35gSaZb
+T0003,windows,Windows Server Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/windows-server/?srsltid=AfmBOooq2dzE63GaHTGb-mty_MjepEKFTAr0BHM1_8uzz_qGBQHDyL6p
+T0004,windows,Windows 11 Essential Training - Basics to Advance Level,Description not available,Udemy,,unknown,,https://www.udemy.com/course/windows11/?srsltid=AfmBOoqZBPEDF1iEkD-12d4HqamYGjSTXdXjsKgS5nIuVX8FwRnG6ap2
+T0005,windows,Windows 11: From Beginner to Advanced. 2025,Description not available,Udemy,,unknown,,https://www.udemy.com/course/windows-11-from-beginner-to-advanced/?srsltid=AfmBOopkS90dXApbklLXx0pbrPgUsU3PZl0uVL2ZklhFZQZVHkHYjwoS
+T0001,html,Learn HTML,Description not available,Codecademy,7.0,unknown,,https://www.codecademy.com/learn/learn-html
+T0002,html,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=html
+T0003,html,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0004,html,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0005,html,Popular and trending topics,Description not available,Udemy,,unknown,,https://www.udemy.com/featured-topics/
+T0001,css,Learn CSS,Description not available,Codecademy,6.0,unknown,,https://www.codecademy.com/learn/learn-css
+T0002,css,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=css
+T0003,css,Learn CSS,Description not available,Edx,,unknown,,https://www.edx.org/learn/css
+T0004,css,CSS Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/css/?srsltid=AfmBOoq9MO_ftWJ1GxVNhPBVMkHqvzlIZRYaxhCemCVHFrRmqDXYf6BA
+T0005,css,"Introduction to HTML, CSS, & JavaScript",Description not available,Coursera,,unknown,,https://www.coursera.org/learn/introduction-html-css-javascript
+T0001,bootstrap,Learn Bootstrap,Description not available,Codecademy,3.0,unknown,,https://www.codecademy.com/learn/learn-bootstrap
+T0002,bootstrap,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=bootstrap
+T0003,bootstrap,Free Bootstrap Courses and Tutorials,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/bootstrap/free/
+T0004,bootstrap,Bootstrap Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/bootstrap/?srsltid=AfmBOorlRQWAkKk-97ZbHs36l24qo0qXCAt1tpLw-A6X9i-UnRwYyaDJ
+T0005,bootstrap,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0001,django,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=django
+T0002,django,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0003,django,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0004,django,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses
+T0005,django,Free online courses to achieve your goals,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/free/
+T0001,flask,Flask Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/flask/?srsltid=AfmBOorrCo0tM8-2c68crx-B8cmMbiemmXlDHjhBFJ_bKHI3paVA3GAQ
+T0002,flask,Explore online Flask courses and certificates,Description not available,Edx,,unknown,,https://www.edx.org/learn/flask
+T0003,flask,Python Flask for Beginners,Description not available,Udemy,,unknown,,https://www.udemy.com/course/python-flask-for-beginners/
+T0004,flask,"HTML 5,Python,Flask Framework All In One Complete Course",Description not available,Udemy,,unknown,,https://www.udemy.com/course/html-5pythonflask-framework-all-in-one-complete-course/
+T0005,flask,Flask Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/flask/
+T0001,laravel,Laravel Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/laravel/
+T0002,laravel,Mastering Laravel Framework and PHP,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/laravel-framework-and-php
+T0003,laravel,Learn Laravel with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/laravel
+T0004,laravel,Pass the Laravel Certification,Description not available,Udemy,,unknown,,https://www.udemy.com/course/pass-the-laravel-certification-part-1/
+T0005,laravel,Laravel & PHP Mastery: Build 5 Real-World Projects,Description not available,Udemy,,unknown,,https://www.udemy.com/course/laravel-beginner-fundamentals/
+T0001,spring,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=spring+boot
+T0002,spring,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=spring+framework
+T0003,spring,Learn Spring,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/learn/learn-spring
+T0004,spring,"[NEW] Spring Boot 3, Spring 6 & Hibernate for Beginners",Description not available,Udemy,,unknown,,https://www.udemy.com/course/spring-hibernate-tutorial/?srsltid=AfmBOor3SQFFtUGVNpxbmHBgQxtmYY1FYFWOVHFGTz69AniofUI5EAFQ
+T0005,spring,Spring Framework Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/spring-framework/?srsltid=AfmBOorTIp7aChZag_Z7-mcvlhjNm98jRE0-dqclqL-wPuM9wUj33zjw
+T0001,ruby,Learn Ruby,Description not available,Codecademy,9.0,unknown,,https://www.codecademy.com/learn/learn-ruby
+T0002,ruby,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=ruby
+T0003,ruby,Learn Ruby with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/ruby
+T0004,ruby,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,ruby,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0001,c++,C++ (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/c-plus-plus/
+T0002,c++,C++ courses,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/catalog/language/c-plus-plus
+T0003,c++,C++ Tutorial for Complete Beginners,Description not available,Udemy,,unknown,,https://www.udemy.com/course/free-learn-c-tutorial-beginners/
+T0001,php,PHP courses,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/catalog/language/php
+T0002,php,PHP (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/php/
+T0003,php,PHP (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/php/?srsltid=AfmBOopE64Kcg95fPiiXrLdcAZWCFQNx8yWHJfauONSqPDljJ4tUmyzO
+T0004,php,Free PHP (programming language) Courses and Tutorials,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/php/free/?srsltid=AfmBOop2vNk9fGxKe3j7mridaiymjBL6jcAiUUjdbVVkbxtft-3tFnNN
+T0005,php,Advanced PHP (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/php/expert/?srsltid=AfmBOoqYJekQ1djOzD0pbA0PAmDcpCF3bDq7bq-NM7-kUMgr7qluOunF
+T0001,go,Go (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/go-programming-language/?srsltid=AfmBOopjPgZTc-gVaNd1rd4UClM2HKC1U0hEWt_z4Xd9MXoWydwsh-xj
+T0002,go,Go - The Complete Guide,Description not available,Udemy,,unknown,,https://www.udemy.com/course/go-the-complete-guide/?srsltid=AfmBOorRwjo4bFJ4IPcHrSpmQhhKl-Aghh9q0TS233ZYT7ZbfYxvWtW2
+T0003,go,Go: The Complete Developer's Guide (Golang),Description not available,Udemy,,unknown,,https://www.udemy.com/course/go-the-complete-developers-guide/?srsltid=AfmBOoopdoZ8QlEAppDY8GFOxvpjOfH6Rp_16_C_8NmwXLj9FbvgBWie
+T0004,go,Master Go Programming (Golang): Complete Bootcamp,Description not available,Udemy,,unknown,,https://www.udemy.com/course/master-go-programming-complete-golang-bootcamp/?srsltid=AfmBOopGIW5HhPoHjIK3gGiOQwhp4rwc73F4T8orwt31wHbIyV0MtH93
+T0005,go,Go (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/go-programming-language/?srsltid=AfmBOorU6nTVuTmueeihU9Tzkat8kY4wVnXmtrStsWxU6YJ6tAaLqI9U
+T0001,c#,Learn C#,Description not available,Codecademy,17.0,unknown,,https://www.codecademy.com/learn/learn-c-sharp
+T0002,c#,C# (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/c-sharp/?p=5
+T0003,c#,C# .NET with MS SQL Complete Beginner to Master 2025,Description not available,Udemy,,unknown,,https://www.udemy.com/course/net-core-with-ms-sql-beginner-to-expert/?srsltid=AfmBOooaWU8GfBwwTcbFldgtTD-ljZLjQWGvbgsSxjI7Ty5C1tAbJJpi
+T0004,c#,Complete C# Unity 3D Game Development (Updated To Unity 6),Description not available,Udemy,,unknown,,https://www.udemy.com/course/unitycourse2/?srsltid=AfmBOoo7OGHG91CnOtCPnF9XUEZuvQ5X-mUxJumWpvvbdVJRhgZWAEWE
+T0005,c#,C# Test Automation Engineer - from Zero to Hero,Description not available,Udemy,,unknown,,https://www.udemy.com/course/csharp-test-automation-engineer-from-zero-to-hero/?srsltid=AfmBOopyWg2YbzxuZhetBz0pNle5n8uqPMHNeQLalqmYg4ULxdNAkOqL
+T0001,rust,Rust Programming Specialization,Description not available,Coursera,,unknown,,https://www.coursera.org/specializations/rust-programming
+T0002,rust,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/certificates/professional-certificate/ai-rust-programming
+T0003,rust,Rust Fundamentals,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/rust-fundamentals
+T0004,rust,Rust pour tous : Le langage de programmation sûr et moderne,Description not available,Udemy,,unknown,,https://www.udemy.com/course/learnrust/
+T0005,rust,Advanced Rust Programming,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/advanced-rust-programming
+T0001,swift,Swift courses,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/catalog/language/swift
+T0002,swift,Programming Fundamentals in Swift,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/programming-fundamentals-swift
+T0003,swift,Swift Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/swift/
+T0004,swift,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=swift
+T0005,swift,Learn Swift,Description not available,Codecademy,12.0,unknown,,https://www.codecademy.com/learn/learn-swift
+T0001,kotlin,Learn Kotlin,Description not available,Codecademy,9.0,unknown,,https://www.codecademy.com/learn/learn-kotlin
+T0002,kotlin,Kotlin Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/kotlin/?srsltid=AfmBOooZVxaVb--Qk8zTMTvY55rfnw64rdl_KzG8aPui_4X0EOlb1fR2
+T0003,kotlin,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0004,kotlin,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0005,kotlin,"World-Class Learning for Anyone, Anywhere",Description not available,Coursera,,unknown,,https://about.coursera.org/how-coursera-works/
+T0001,scala,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=scala
+T0002,scala,Scala Programming Language,Description not available,Udemy,,unknown,,https://www.udemy.com/course/scala-programming-language/?matchtype=b&msclkid=76bd3d719f8c1229f2d65915ef725f90
+T0003,scala,Scala Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/scala/?srsltid=AfmBOorFwd85G04S71EQtDtZKLdcszh5rUauZiF4iXzfIONpUL-_klwL
+T0004,scala,Learn Scala with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/scala
+T0005,scala,Scala & Functional Programming Essentials,Description not available,Udemy,,unknown,,https://www.udemy.com/course/rock-the-jvm-scala-for-beginners/?srsltid=AfmBOopAgKYPCo_JMoJHOf-Va3aXU5EoZ6Jgjd4hbVMiKo8CKi_DWAVx
+T0001,r,R Programming,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/r-programming
+T0002,r,Learn R,Description not available,Codecademy,14.0,unknown,,https://www.codecademy.com/learn/learn-r
+T0003,r,Introduction to R,Description not available,Datacamp,3.0,unknown,,https://www.datacamp.com/courses/free-introduction-to-r
+T0004,r,Learn R programming,Description not available,Edx,,unknown,,https://www.edx.org/learn/r-programming
+T0005,r,R (programming language) Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/r-programming-language/?srsltid=AfmBOorWTX67tYrvNxyuSVSVyd9NG-kkITWvPYX-6aqQPY3OXIpgWego
+T0001,tableau,Free Tableau Courses and Tutorials,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/tableau/free/
+T0002,tableau,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=tableau
+T0003,tableau,"Tableau Certifications Guide: Certification Levels, Costs & How to Pass",Description not available,Datacamp,2.0,unknown,,https://www.datacamp.com/blog/tableau-certification
+T0004,tableau,Tableau Business Intelligence Analyst  Professional Certificate,Description not available,Coursera,,unknown,,https://www.coursera.org/professional-certificates/tableau-business-intelligence-analyst
+T0005,tableau,"Python, SQL, Tableau for Data Science Professional Certificate",Description not available,Coursera,,unknown,,https://www.coursera.org/professional-certificates/python-sql-tableau-data-science
+T0001,elasticsearch,Elasticsearch Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/elasticsearch/
+T0002,elasticsearch,Complete Guide to Elasticsearch,Description not available,Udemy,,unknown,,https://www.udemy.com/course/elasticsearch-complete-guide/
+T0003,elasticsearch,Foundations of Elasticsearch,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/packt-foundations-of-elasticsearch-uohrj
+T0004,elasticsearch,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,elasticsearch,Popular and trending topics,Description not available,Udemy,,unknown,,https://www.udemy.com/featured-topics/
+T0001,power bi,Microsoft Power BI Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/microsoft-power-bi/
+T0002,power bi,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=microsoft+power+bi
+T0003,power bi,Microsoft Power BI Data Analyst Professional Certificate,Description not available,Coursera,,unknown,,https://www.coursera.org/professional-certificates/microsoft-power-bi-data-analyst
+T0004,power bi,Microsoft Power BI Desktop for Business Intelligence,Description not available,Udemy,,unknown,,https://www.udemy.com/course/microsoft-power-bi-up-running-with-power-bi-desktop/?srsltid=AfmBOoqce7nxaNYGftRqRfzFuFI1Y3Za0iAWdcFw_0oUre1hCirzkykf
+T0005,power bi,Microsoft Power BI Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/microsoft-power-bi/?srsltid=AfmBOooLi2RuMryO4kRXsLdbkqlyN622p8WkxWbD6EMn5CydGrKjUlit
+T0001,redis,Redis Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/redis/
+T0002,redis,Redis Tutorial for Beginners,Description not available,Udemy,,unknown,,https://www.udemy.com/course/redis-tutorial-for-beginners/
+T0003,redis,Redis: The Complete Developer's Guide,Description not available,Udemy,,unknown,,https://www.udemy.com/course/redis-the-complete-developers-guide-p/
+T0004,redis,"Master Redis - From Beginner to Advanced, 20+ hours",Description not available,Udemy,,unknown,,https://www.udemy.com/course/masterredis/
+T0005,redis,Redis with .Net 6 in Arabic [بالعربي],Description not available,Udemy,,unknown,,https://www.udemy.com/course/mastering-redis-with-net6/
+T0001,hadoop,Become a Hadoop Developer |Training|Tutorial,Description not available,Udemy,,unknown,,https://www.udemy.com/course/hadoop-tutorial/
+T0002,hadoop,Hadoop Architecture Explained: Core Components and How They Work,Description not available,Datacamp,4.0,unknown,,https://www.datacamp.com/blog/hadoop-architecture
+T0003,hadoop,Apache Hadoop Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/hadoop/?srsltid=AfmBOorRSPrSraIFcl4N90F7X92iIlzs_7wpIlNEhDuA9x3ddSSpN5DQ
+T0004,hadoop,Learn Hadoop with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/hadoop
+T0005,hadoop,Course Title Not Found,Description not available,Edx,,unknown,,https://www.edx.org/learn/big-data/ibm-big-data-hadoop-and-spark-basics
+T0001,apache spark,Apache Spark Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/apache-spark/
+T0002,apache spark,Learn Apache Spark with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/apache-spark
+T0003,apache spark,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=apache+spark
+T0004,apache spark,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,apache spark,Popular and trending topics,Description not available,Udemy,,unknown,,https://www.udemy.com/featured-topics/
+T0001,kafka,Apache Kafka Series - Learn Apache Kafka for Beginners v3,Description not available,Udemy,,unknown,,https://www.udemy.com/course/apache-kafka/?srsltid=AfmBOoooK7OMe0D-djcA-FnX5oNdCLVsoOH9_a-OCNJyouwDNLYQwof5
+T0001,airflow,The Complete Hands-On Introduction to Apache Airflow 3,Description not available,Udemy,,unknown,,https://www.udemy.com/course/the-complete-hands-on-course-to-master-apache-airflow/
+T0002,airflow,Introduction to Apache Airflow in Python,Description not available,Datacamp,14.0,unknown,,https://www.datacamp.com/courses/introduction-to-apache-airflow-in-python
+T0003,airflow,Apache Airflow: The Hands-On Guide,Description not available,Udemy,,unknown,,https://www.udemy.com/course/the-ultimate-hands-on-course-to-master-apache-airflow/?srsltid=AfmBOorj8nW5Bo7icq_u1o7CdIJEcWp5WmA1v-M6cjOvgSdrP6awz_eQ
+T0001,terraform,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=terraform
+T0002,terraform,Take on Terraform quickly and easily with Pluralsight,Description not available,Pluralsight,,unknown,,https://www.pluralsight.com/browse/terraform-training
+T0003,terraform,Terraform Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/terraform/
+T0004,terraform,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0005,terraform,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0001,ansible,Fundamentals of Ansible,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/fundamentals-of-ansible
+T0002,ansible,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0003,ansible,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0004,ansible,Popular and trending topics,Description not available,Udemy,,unknown,,https://www.udemy.com/featured-topics/
+T0005,ansible,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0001,prometheus,Prometheus | The Complete Hands-On for Monitoring & Alerting,Description not available,Udemy,,unknown,,https://www.udemy.com/course/prometheus-course/?srsltid=AfmBOooyfO2CGSXT7RCUfv_cUDfUhfaltk1mq8bi3sakT045-htbnRXN
+T0001,unity,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0002,unity,Welcome back,Description not available,Coursera,,unknown,,https://www.coursera.org/login
+T0003,unity,Free online courses to achieve your goals,Description not available,Udemy,,unknown,,https://www.udemy.com/courses/free/
+T0004,unity,What Is Coursera?,Description not available,Coursera,,unknown,,https://www.coursera.org/articles/what-is-coursera
+T0005,unity,"World-Class Learning for Anyone, Anywhere",Description not available,Coursera,,unknown,,https://about.coursera.org/how-coursera-works/
+T0001,grafana,Learn Grafana with online courses and programs,Description not available,Edx,,unknown,,https://www.edx.org/learn/grafana
+T0002,grafana,Grafana Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/grafana/
+T0003,grafana,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
+T0004,grafana,Popular and trending topics,Description not available,Udemy,,unknown,,https://www.udemy.com/featured-topics/
+T0005,grafana,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/degrees/education
+T0001,unreal engine,Unreal Engine Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/unreal-engine/?srsltid=AfmBOoq_3g2BKDd7iwpesACkPWyQihQxQmtM4slhvMIAj0zlHb5GTrYR
+T0002,unreal engine,Unreal Engine 5 C++ Game Development (Updated 5.6),Description not available,Udemy,,unknown,,https://www.udemy.com/course/unrealcourse/
+T0003,unreal engine,What Is Unreal Engine?,Description not available,Coursera,,unknown,,https://www.coursera.org/articles/what-is-unreal-engine
+T0004,unreal engine,Unreal Engine Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/unreal-engine/
+T0005,unreal engine,Unreal Engine 5 C++ The Ultimate Game Developer Course,Description not available,Udemy,,unknown,,https://www.udemy.com/course/unreal-engine-5-the-ultimate-game-developer-course/
+T0001,ios,iOS Development Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/ios-development/?srsltid=AfmBOoqIp_ovQGGvmwdy-TcmUP0sQOUbgo9b1GbSpBh9r5W2kkFDY-7M
+T0002,ios,iOS Developer,Description not available,Codecademy,40.0,unknown,,https://www.codecademy.com/learn/paths/ios-developer
+T0003,ios,Free iOS Development Courses and Tutorials,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/ios-development/free/?srsltid=AfmBOor4nAGx9aW09t2HVOOQYZtiOQFXFSl0NvL1VZ2rwIA15pJKITWB
+T0004,ios,iOS Development Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/ios-development/?srsltid=AfmBOorkDqZLjNQJz8x2F071ebvf-eWooWrFADZKpz3U-v8urqFYREwk
+T0005,ios,Learn iOS development with online courses,Description not available,Edx,,unknown,,https://www.edx.org/learn/ios-development
+T0001,android,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=Android+programming
+T0002,android,Learn the Basics of Android,Description not available,Codecademy,1.0,unknown,,https://www.codecademy.com/learn/learn-the-basics-of-android
+T0003,android,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=android
+T0004,android,Android Development Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/android-development/?srsltid=AfmBOorvGE58GH_SLfP1alV7cdy__rOTjkR-o90cHBZ8Lc5nQa1vVKB_
+T0005,android,Free Android Development Courses and Tutorials,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/android-development/free/?srsltid=AfmBOoopsTPH50wp2lEFNMWaV0ckuFAIbprtt8m6WLd2kgt9hRHh6oz5
+T0001,react native,React Native,Description not available,Coursera,,unknown,,https://www.coursera.org/learn/react-native-course
+T0002,react native,Learn React Native,Description not available,Codecademy,5.0,unknown,,https://www.codecademy.com/learn/learn-react-native
+T0003,react native,React Native Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/react-native/
+T0004,react native,Course Title Not Found,Description not available,Coursera,,unknown,,https://www.coursera.org/courses?query=react+native
+T0005,react native,Meta React Native Specialization,Description not available,Coursera,,unknown,,https://www.coursera.org/specializations/meta-react-native
+T0001,flutter,Learn Flutter - Beginners Course,Description not available,Udemy,,unknown,,https://www.udemy.com/course/learn-flutter-beginners-course/?srsltid=AfmBOoqlhM_dE0sEEEtSHfcekTG-6iWRyFG-gDQkilEeNMLv2HCiO78K
+T0002,flutter,Flutter & Dart - The Complete Guide [2025 Edition],Description not available,Udemy,,unknown,,https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/?srsltid=AfmBOooSngVi9lPlm87sSipjg6wNC0t1sO9DPzkHTPZBgJCgY6nBbupR
+T0003,flutter,"Flutter and Dart: Developing iOS, Android, and Mobile Apps",Description not available,Coursera,,unknown,,https://www.coursera.org/learn/flutter-and-dart-developing-ios-android-mobile-apps
+T0004,flutter,Google Flutter Courses,Description not available,Udemy,,unknown,,https://www.udemy.com/topic/google-flutter/
+T0005,flutter,Trending Now,Description not available,Udemy,,unknown,,https://www.udemy.com/
