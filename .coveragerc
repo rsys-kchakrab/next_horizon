@@ -1,0 +1,54 @@
+[run]
+source = .
+include = 
+    app_crewai.py
+    util_models.py
+    web_tools.py
+    ml_training.py
+    guardrails.py
+    evaluation_metrics.py
+    compute_metrics.py
+    clarifier_agent.py
+    resume_processing_crew.py
+    backfillers.py
+    tabs/*.py
+omit = 
+    tests/*
+    .venv/*
+    venv/*
+    */site-packages/*
+    */lib/python*/site-packages/*
+    .pytest_cache/*
+    build/*
+    dist/*
+    *.egg-info/*
+    .git/*
+    __pycache__/*
+    */migrations/*
+    */node_modules/*
+    .tox/*
+    .coverage
+    .coverage.*
+    coverage.xml
+    *.pyc
+    *.pyo
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod
+
+[html]
+directory = htmlcov
+title = NextHorizon Test Coverage Report
+
+[xml]
+output = coverage.xml
