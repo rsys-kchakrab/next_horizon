@@ -1,5 +1,5 @@
 
-# FILE: tabs/tab6_guidance_courses.py
+# FILE: ui/tabs/course_recommendations.py
 from __future__ import annotations
 import streamlit as st
 import pandas as pd

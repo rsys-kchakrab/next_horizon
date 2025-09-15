@@ -1,5 +1,5 @@
 
-# FILE: clarifier_agent.py
+# FILE: agents/clarifier_agent.py
 # Purpose: Ask targeted questions when information confidence is low; update session state.
 from __future__ import annotations
 from dataclasses import dataclass

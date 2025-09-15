@@ -1,5 +1,5 @@
 
-# FILE: tabs/tab1_extract_parse.py
+# FILE: ui/tabs/resume_parsing.py
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -7,10 +7,10 @@ import streamlit as st
 from resume_processing_crew import (
     ResumeProcessingCrew, parse_structured_info, normalize_structured_json
 )
-from compute_metrics import parse_quality
+from utils.compute_metrics import parse_quality
 
 try:
-    from backfillers import backfill_from_text
+    from processing.data_enhancer import backfill_from_text
 except Exception:
     def backfill_from_text(cleaned_text, structured_json): return structured_json
 

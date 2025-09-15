@@ -1,12 +1,12 @@
 
-# FILE: tabs/tab5_skill_gaps.py
+# FILE: ui/tabs/skill_gaps.py
 from __future__ import annotations
 import streamlit as st
 import pandas as pd
 import re
 from collections import Counter
-from clarifier_agent import ClarifierAgent
-from compute_metrics import parse_quality, clarify_improvement
+from agents.clarifier_agent import ClarifierAgent
+from utils.compute_metrics import parse_quality, clarify_improvement
 
 def extract_skills_from_jd_text(jd_text: str) -> list:
     """Extract skills from job description text using basic NLP patterns"""
