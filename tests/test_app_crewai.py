@@ -23,7 +23,7 @@ class TestAppCrewAI:
         """Test that Streamlit page configuration is properly set"""
         # Test page config parameters
         expected_config = {
-            'page_title': 'NextHorizon v6',
+            'page_title': 'NextHorizon - Your Personalized Career Guide',
             'page_icon': '🚀',
             'layout': 'wide'
         }

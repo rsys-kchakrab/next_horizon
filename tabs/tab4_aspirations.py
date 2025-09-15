@@ -8,6 +8,64 @@ from ml_training import rank_roles_for_resume, prepare_resume_text, rank_jds_wit
 from web_tools import serpapi_search, openai_rank_roles, openai_rank_jds
 
 def _get_resume_text() -> str:
+    # Get the updated structured JSON from review & edit tab
+    structured_json = st.session_state.get("structured_json", {})
+    
+    if structured_json:
+        # Build comprehensive resume text from structured data
+        text_parts = []
+        
+        # Professional summary
+        if structured_json.get("professional_summary"):
+            text_parts.append(f"Professional Summary: {structured_json['professional_summary']}")
+        
+        # Current role
+        current_role = structured_json.get("current_role", {})
+        if current_role.get("role") and current_role.get("company"):
+            text_parts.append(f"Current Role: {current_role['role']} at {current_role['company']}")
+        
+        # Work experience
+        work_exp = structured_json.get("work_experience", [])
+        if work_exp:
+            work_text = "Work Experience: "
+            for exp in work_exp:
+                if exp.get("title") and exp.get("company"):
+                    work_text += f"{exp['title']} at {exp['company']} ({exp.get('start_date', '')} - {exp.get('end_date', '')}). "
+                    if exp.get("responsibilities"):
+                        work_text += f"Responsibilities: {exp['responsibilities']} "
+            text_parts.append(work_text)
+        
+        # Education
+        education = structured_json.get("education", [])
+        if education:
+            edu_text = "Education: "
+            for edu in education:
+                if edu.get("degree") and edu.get("institution"):
+                    edu_text += f"{edu['degree']} in {edu.get('specialization', '')} from {edu['institution']} ({edu.get('graduation_date', '')}). "
+            text_parts.append(edu_text)
+        
+        # Skills
+        tech_skills = structured_json.get("technical_skills", [])
+        if tech_skills:
+            text_parts.append(f"Technical Skills: {', '.join(tech_skills)}")
+        
+        soft_skills = structured_json.get("soft_skills", [])
+        if soft_skills:
+            text_parts.append(f"Soft Skills: {', '.join(soft_skills)}")
+        
+        # Certifications
+        certifications = structured_json.get("certifications", [])
+        if certifications:
+            text_parts.append(f"Certifications: {', '.join(certifications)}")
+        
+        # Total experience
+        total_exp = structured_json.get("total_years_experience")
+        if total_exp:
+            text_parts.append(f"Total Years of Experience: {total_exp}")
+        
+        return " ".join(text_parts)
+    
+    # Fallback to original logic
     resume_json = st.session_state.get("resume_json") or {}
     try:
         txt = prepare_resume_text(resume_json)
@@ -23,14 +81,36 @@ def _get_jd_df() -> pd.DataFrame:
 
 def render():
     st.subheader("Aspirations — Role suggestions & matching")
+    
+    # Add aspirations input box
+    st.markdown("### Your Career Aspirations")
+    user_aspirations = st.text_area(
+        "What are your career goals and aspirations?", 
+        value=st.session_state.get("user_aspirations", ""),
+        height=100,
+        help="Describe your career goals, desired roles, industries you're interested in, or specific skills you want to develop",
+        key="aspirations_input"
+    )
+    
+    # Save aspirations to session state
+    st.session_state.user_aspirations = user_aspirations
+    
+    st.markdown("---")
+    
     resume_text = _get_resume_text()
+    
+    # Include user aspirations in the resume text for matching
+    if user_aspirations.strip():
+        resume_text += f" Career Aspirations: {user_aspirations}"
+    
     jd_df = _get_jd_df()
 
     if not resume_text:
-        st.info("Upload a resume in Tab 1. The extracted text is used to match against roles/JDs.")
+        st.info("Upload a resume in Tab 1 and complete the Review & Edit section in Tab 2 for better role matching.")
     if jd_df.empty:
         st.warning("JD database is empty. Upload `jd_database.csv` in the Dev tab.")
 
+    st.markdown("### Role Suggestions")
     mode = st.radio("Source", ["Trained Model","OpenAI + Web"], index=0 if st.session_state.get("role_model") else 1, horizontal=True)
 
     if mode == "Trained Model":

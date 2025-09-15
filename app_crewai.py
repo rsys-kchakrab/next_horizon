@@ -22,9 +22,9 @@ from tabs.tab4_aspirations import render as tab4_render
 from tabs.tab5_skill_gaps import render as tab5_render
 from tabs.tab6_guidance_courses import render as tab6_render
 
-st.set_page_config(page_title="NextHorizon v6", page_icon="🧭", layout="wide")
+st.set_page_config(page_title="NextHorizon - Your Personalized Career Guide", page_icon="🧭", layout="wide")
 load_dotenv(override=True)
-st.title("🧭 NextHorizon v6")
+st.title("🧭 NextHorizon - Your Personalized Career Guide")
 
 # Session defaults
 for k, v in {
@@ -78,18 +78,21 @@ with st.sidebar.expander("Train Models", expanded=False):
     tab3_render(models_dir=Path("./models"))
 
 # ---------- Tabs
-T1, T2, T4, T5, T6 = st.tabs([
-    "1) Extract & Parse",
-    "2) Review & Edit", 
-    "3) Aspirations (Choose Source)",
-    "4) Skill Gaps & Clarify",
-    "5) Guidance & Courses (Choose Source)",
+T1, T2, T3, T4 = st.tabs([
+    "1) Resume Parsing",
+    "2) Job Role Recommendation",
+    "3) Skill Gaps Identification",
+    "4) Course Recommendation",
 ])
 
-with T1: tab1_render()
-with T2: tab2_render()
-with T4: tab4_render()
-with T5: tab5_render()
-with T6: tab6_render()
+with T1: 
+    tab1_render()
+    # Show Review & Edit section only after parsing is done
+    if st.session_state.get("structured_json"):
+        st.markdown("---")
+        tab2_render()
+with T2: tab4_render()
+with T3: tab5_render()
+with T4: tab6_render()
 
 st.sidebar.caption("Tip: Keep this structure; extend tabs independently without touching the main app.")

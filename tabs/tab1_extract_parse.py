@@ -43,18 +43,6 @@ def render():
         struct = backfill_from_text(st.session_state.cleaned_text, struct)
         st.session_state.structured_json = struct
 
-    if st.session_state.get("cleaned_text"):
-        st.subheader("🧹 Cleaned Text")
-        st.text_area("cleaned_text", value=st.session_state.cleaned_text, height=160)
-
     if st.session_state.get("validation_report"):
         st.subheader("🧪 Validation Report (from pipeline)")
         st.text(st.session_state.validation_report)
-
-    if st.session_state.get("structured_json"):
-        st.subheader("📦 Structured Information (JSON)")
-        st.code(json.dumps(st.session_state.structured_json, indent=2, ensure_ascii=False), language="json")
-        score, detail = parse_quality(st.session_state.structured_json)
-        st.markdown(f"**Metric — Parse Quality:** `{score:.2f}`")
-        if detail.get("missing"):
-            st.caption("Missing: " + ", ".join(detail["missing"]))

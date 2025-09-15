@@ -390,7 +390,7 @@ def render(models_dir: Path):
                     
                     # Show full metrics
                     with st.expander("Full Metrics", expanded=False):
-                        st.json(metrics)
+                        st.text("Metrics computed successfully. Check individual metric displays above.")
 
     # ============ Training Content Classifier Section ============
     st.markdown("---")
@@ -690,7 +690,7 @@ def render(models_dir: Path):
                         
                         # Show detailed metrics
                         with st.expander("📋 Detailed Technical Metrics", expanded=False):
-                            st.json(metrics)
+                            st.text("Training metrics computed successfully. Check metric displays above.")
                             
                     except Exception as e:
                         st.error(f"Training failed: {str(e)}")
@@ -726,4 +726,4 @@ def render(models_dir: Path):
                     
                     # Show full metrics
                     with st.expander("Full Metrics", expanded=False):
-                        st.json(metrics)
+                        st.text("Model metrics computed successfully. Check individual metric displays above.")
