@@ -212,16 +212,32 @@ def render():
     role_title = st.session_state.chosen_role_title
     candidate_skills = st.session_state.structured_json.get("technical_skills", [])
     
-    # Get skill gaps based on selected role from JD database
-    gaps = get_skill_gaps_for_role(role_title, candidate_skills, jd_df)
+    # Use stored skill gaps from skill gaps tab (if available) or calculate fresh
+    if st.session_state.get("skill_gaps") is not None:
+        gaps = st.session_state.skill_gaps
+        st.info("🔄 Using skill gaps from your analysis (including any clarification answers)")
+    else:
+        # Fallback: calculate gaps if not available in session
+        gaps = get_skill_gaps_for_role(role_title, candidate_skills, jd_df)
+        st.info("⚠️ Calculating fresh skill gaps. Visit 'Skill Gap Analysis' tab first for better results.")
     
     if not gaps:
         st.success("🎉 No major skill gaps detected for the selected role!")
-        st.info("You seem to have most of the skills required for this role. Consider looking for more advanced or specialized skills for career growth.")
+        if st.session_state.get("skill_gaps") is not None:
+            st.info("Great! Your clarification answers helped fill in the missing skills. You seem well-prepared for this role!")
+        else:
+            st.info("You seem to have most of the skills required for this role. Consider looking for more advanced or specialized skills for career growth.")
         return
     
     st.write(f"**Finding courses for role:** {role_title}")
-    st.write(f"**Skill gaps identified:** {', '.join(gaps[:10])}")  # Show first 10 gaps
+    
+    # Show information about skill gaps source
+    if st.session_state.get("skill_gaps") is not None:
+        st.write(f"**Skill gaps identified:** {', '.join(gaps[:10])} ✨")  # Show first 10 gaps
+        st.caption("✨ These gaps include any clarification answers you provided in the Skill Gap Analysis tab")
+    else:
+        st.write(f"**Skill gaps identified:** {', '.join(gaps[:10])}")  # Show first 10 gaps
+        st.caption("💡 Tip: Complete the Skill Gap Analysis tab first for more accurate recommendations")
     
     # Check for training dataset
     training_df = st.session_state.get("training_df", pd.DataFrame())

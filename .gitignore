@@ -168,3 +168,4 @@ tmp/
 # Documentation (REORGANIZATION_SUMMARY.md is the main documentation)
 README*
 *.md.bak
+*.docx

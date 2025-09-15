@@ -63,7 +63,16 @@ class ClarifierAgent:
     def incorporate_answers(self, answers: Dict[str, Any], resume_json: Dict[str, Any]) -> Dict[str, Any]:
         # Answers can be flat (e.g., "technical_skills") or dotted ("personal_info.email")
         for k, v in (answers or {}).items():
-            if "." in k:
+            if k == "confirm_missing_required_skills":
+                # Special handling: these are skills the user confirmed they have
+                # Add them to technical_skills
+                cur = set([str(x).strip() for x in (resume_json.get("technical_skills") or [])])
+                if isinstance(v, list):
+                    cur |= set([str(x).strip() for x in v])
+                elif v:  # single value
+                    cur.add(str(v).strip())
+                resume_json["technical_skills"] = sorted([x for x in cur if x])
+            elif "." in k:
                 head, tail = k.split(".", 1)
                 sub = resume_json.setdefault(head, {})
                 if isinstance(sub, dict):

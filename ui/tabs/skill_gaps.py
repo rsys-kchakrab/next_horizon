@@ -136,6 +136,10 @@ def render():
         else:
             gaps.append(req_skill)
     
+    # Store skill gaps in session state for use in course recommendations
+    st.session_state.skill_gaps = gaps
+    st.session_state.matched_skills = matched_skills
+    
     # Display results
     col1, col2 = st.columns(2)
     
@@ -190,6 +194,41 @@ def render():
                 st.success(f"Applied. **Clarify Improvement:** {sc_improve:.2f}")
                 if det.get("fixed"): 
                     st.caption("Fixed: " + ", ".join(det["fixed"]))
+                
+                # Recalculate skill gaps with updated information
+                updated_candidate_skills = new_json.get("technical_skills", [])
+                updated_gaps = []
+                updated_matched_skills = []
+                updated_candidate_skills_lower = [skill.lower().strip() for skill in updated_candidate_skills]
+                
+                st.info(f"🔄 Updated technical skills: {', '.join(updated_candidate_skills)}")
+                
+                for req_skill in required_skills:
+                    req_skill_lower = req_skill.lower().strip()
+                    # Improved matching: exact match, partial match in both directions
+                    is_matched = any(
+                        req_skill_lower == candidate_skill or 
+                        req_skill_lower in candidate_skill or 
+                        candidate_skill in req_skill_lower
+                        for candidate_skill in updated_candidate_skills_lower
+                    )
+                    
+                    if is_matched:
+                        updated_matched_skills.append(req_skill)
+                    else:
+                        updated_gaps.append(req_skill)
+                
+                # Update session state with new gaps
+                st.session_state.skill_gaps = updated_gaps
+                st.session_state.matched_skills = updated_matched_skills
+                
+                if len(updated_gaps) < len(gaps):
+                    st.success(f"🎉 Great! Reduced skill gaps from {len(gaps)} to {len(updated_gaps)}")
+                    if updated_matched_skills:
+                        st.info(f"✅ Now matched: {', '.join(updated_matched_skills[-3:])}")  # Show last 3 matched
+                else:
+                    st.info("Skills updated but gaps remain the same. Make sure you selected the skills you actually have.")
+                
                 # Refresh the page to show updated analysis
                 st.rerun()
         else:

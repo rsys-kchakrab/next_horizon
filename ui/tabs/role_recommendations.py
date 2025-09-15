@@ -79,6 +79,11 @@ def render():
         # Save the selected role to session state for skill gaps analysis
         if sel and st.button("Save Selected Role for Skill Analysis", key="save_role_trained_for_skills"):
             st.session_state.chosen_role_title = sel
+            # Clear previous skill gaps to ensure fresh analysis for new role
+            if "skill_gaps" in st.session_state:
+                del st.session_state.skill_gaps
+            if "matched_skills" in st.session_state:
+                del st.session_state.matched_skills
             st.success(f"Selected role '{sel}' saved for skill gap analysis.")
 
     else:
@@ -124,4 +129,9 @@ def render():
         # Save the selected role to session state for skill gaps analysis
         if sel and st.button("Save Selected Role for Skill Analysis", key="save_role_for_skills"):
             st.session_state.chosen_role_title = sel
+            # Clear previous skill gaps to ensure fresh analysis for new role
+            if "skill_gaps" in st.session_state:
+                del st.session_state.skill_gaps
+            if "matched_skills" in st.session_state:
+                del st.session_state.matched_skills
             st.success(f"Selected role '{sel}' saved for skill gap analysis.")

@@ -5,7 +5,7 @@ from ml_training import prepare_resume_text
 
 def build_resume_text() -> str:
     """Build comprehensive resume text from structured JSON data"""
-    # Get the updated structured JSON from review & edit tab
+    # Get the updated structured JSON from resume parsing tab
     structured_json = st.session_state.get("structured_json", {})
     
     if structured_json:
