@@ -6,7 +6,6 @@ import pandas as pd
 import re
 from collections import Counter
 from typing import Dict, List, Any
-from web_tools import serpapi_search, openai_rank_courses
 from ml_training import recommend_courses_by_model, recommend_courses_from_training_dataset
 
 def openai_rank_training_courses(gaps: List[str], resume_text: str, training_df, top_k: int = 5) -> Dict[str, List[Dict[str, Any]]]:
@@ -200,8 +199,6 @@ def get_skill_gaps_for_role(role_title: str, candidate_skills: list, jd_df: pd.D
     return sorted(gaps)
 
 def render():
-    st.subheader("Guidance & Courses — Choose Source")
-    
     # Check if we have necessary data
     if not st.session_state.get("structured_json") or not st.session_state.get("chosen_role_title"):
         st.info("Complete Tabs 1-4: Upload resume, parse it, and select a role from 'Aspirations' tab.")
@@ -233,16 +230,14 @@ def render():
     # Check for trained model
     has_trained_model = st.session_state.get("training_model") is not None
     
-    # Define the three main options
-    mode_options = ["Trained Model", "OpenAI", "Web"]
+    # Define the two main options
+    mode_options = ["Trained Model", "gpt-4o-mini"]
     
     # Set default mode based on available resources
     if has_trained_model:
         default_mode = 0  # Trained Model
-    elif has_training_dataset:
-        default_mode = 1  # OpenAI
     else:
-        default_mode = 2  # Web
+        default_mode = 1  # gpt-4o-mini
     
     mode_c = st.radio("Source", mode_options, index=default_mode)
 
@@ -295,13 +290,10 @@ def render():
             st.info("1. Upload training_database.csv in the left panel (sidebar)")
             st.info("2. Train a model in the Developer section (left panel)")
     
-    elif mode_c == "OpenAI":
+    elif mode_c == "gpt-4o-mini":
         if has_training_dataset:
-            st.markdown("### 🤖 OpenAI Recommendations")
-            st.caption("Uses OpenAI to intelligently rank courses from your training database based on skill gaps and resume context.")
-            
-            if st.button("🧠 Find Courses with OpenAI", type="primary", key="btn_openai_training"):
-                with st.spinner("Using OpenAI to find the best courses from training database..."):
+            if st.button("Find Courses", type="primary", key="btn_openai_training"):
+                with st.spinner("Using gpt-4o-mini to find the best courses from training database..."):
                     resume_text = st.session_state.get('cleaned_text', '')
                     recs = openai_rank_training_courses(gaps, resume_text, training_df, top_k=5)
                     
@@ -346,74 +338,4 @@ def render():
                     st.info("No courses found in the training database for the identified skill gaps.")
         else:
             st.warning("⚠️ **No training database available.**")
-            st.info("Please upload training_database.csv in the left panel (sidebar) to use OpenAI recommendations.")
-    
-    elif mode_c == "Web":
-        st.markdown("### 🌐 Web Search + AI Ranking")
-        st.caption("Searches live web results and uses AI ranking. Requires SERPAPI_API_KEY + OPENAI_API_KEY.")
-        
-        # Create search query based on skill gaps
-        default_query = f"site:coursera.org OR site:udemy.com {' '.join(gaps[:3])} course"
-        q = st.text_input("Web search for trainings", value=default_query)
-        
-        if st.button("🔍 Search Web & Rank with AI", type="primary", key="btn_rank_courses_web"):
-            with st.spinner("Searching web and ranking with AI..."):
-                snippets = serpapi_search(q, num=5)
-                ranked = openai_rank_courses(gaps, st.session_state.get('cleaned_text',''), snippets, top_k=5)
-                
-            if ranked: 
-                st.markdown("### 🎯 AI-Ranked Web Results")
-                
-                for course in ranked:
-                    title = course.get('title', 'Unknown Course')
-                    provider = course.get('provider', 'Web')
-                    link = course.get('link', '')
-                    match_percent = course.get('match_percent', 0)
-                    
-                    col1, col2 = st.columns([3, 1])
-                    
-                    with col1:
-                        if link:
-                            st.markdown(f"🌐 [{title}]({link}) - **{provider}**")
-                        else:
-                            st.markdown(f"🌐 {title} - **{provider}**")
-                    
-                    with col2:
-                        st.caption(f"🧠 {match_percent}% AI Match")
-                    
-                    st.divider()
-            else:      
-                st.info("No ranking available. Please check your API keys (SERPAPI_API_KEY + OPENAI_API_KEY).")
-    
-    # Display dataset and model information
-    with st.expander("📊 Available Resources", expanded=False):
-        col_info1, col_info2 = st.columns(2)
-        
-        with col_info1:
-            if has_training_dataset:
-                st.success("✅ **Training Database Available**")
-                st.write(f"• Total courses: {len(training_df)}")
-                st.write(f"• Skills covered: {training_df['skill'].nunique()}")
-                st.write(f"• Top providers: {', '.join(training_df['provider'].value_counts().head(3).index.tolist())}")
-            else:
-                st.warning("❌ **No Training Database**")
-                st.write("Build one in Developer section")
-        
-        with col_info2:
-            if has_trained_model:
-                st.success("✅ **Trained Model Available**")
-                if st.session_state.get("training_model_metrics"):
-                    metrics = st.session_state.training_model_metrics
-                    if 'validation' in metrics:
-                        val_metrics = metrics.get('validation', {}).get('summary', {})
-                        st.write(f"• Accuracy: {val_metrics.get('accuracy', 0):.3f}")
-                    st.write(f"• Training items: {metrics.get('n_items', 'Unknown'):,}")
-                else:
-                    st.write("• Status: Ready for recommendations")
-            else:
-                st.warning("❌ **No Trained Model**")
-                st.write("Train one in Developer section")
-        
-        # Show sample courses if requested
-        if has_training_dataset and st.checkbox("Show sample courses from training database"):
-            st.dataframe(training_df.head(10)[['skill', 'title', 'provider', 'price', 'hours']])
+            st.info("Please upload training_database.csv in the left panel (sidebar) to use gpt-4o-mini recommendations.")

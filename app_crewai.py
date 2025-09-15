@@ -17,7 +17,6 @@ os.environ.setdefault("OTEL_LOGS_EXPORTER", "none")
 # Local tabs
 from tabs.tab1_extract_parse import render as tab1_render
 from tabs.tab2_review_edit import render as tab2_render
-from tabs.tab3_dev_train import render as tab3_render
 from tabs.tab4_aspirations import render as tab4_render
 from tabs.tab5_skill_gaps import render as tab5_render
 from tabs.tab6_guidance_courses import render as tab6_render
@@ -29,16 +28,11 @@ st.title("🧭 NextHorizon - Your Personalized Career Guide")
 # Session defaults
 for k, v in {
     "jd_df": pd.DataFrame(),
-    "train_df": pd.DataFrame(),
-    "training_df": pd.DataFrame(),  # For web-scraped training content
     "structured_json": {},
     "cleaned_text": "",
     "validation_report": "",
     "chosen_role_title": "",
-    "role_model": None,
-    "role_model_metrics": {},
-    "training_model": None,
-    "training_model_metrics": {},
+    "user_aspirations": "",
 }.items():
     st.session_state.setdefault(k, v)
 
@@ -47,35 +41,49 @@ if st.session_state.jd_df.empty:
     try: st.session_state.jd_df = pd.read_csv("jd_database.csv")
     except Exception: pass
 
-if st.session_state.train_df.empty:
-    try: st.session_state.train_df = pd.read_csv("training_content.csv")
-    except Exception: pass
-
-# Load web-scraped training dataset if available
-if st.session_state.training_df.empty:
-    try: 
-        training_df = pd.read_csv("training_database.csv")
-        st.session_state.training_df = training_df
-    except Exception: 
-        # Fallback to original training content
-        try:
-            training_df = pd.read_csv("training_content.csv")
-            st.session_state.training_df = training_df
-        except Exception: 
-            pass
-    except Exception: pass
-
 OPENAI_API_KEY_SET = bool(os.getenv("OPENAI_API_KEY"))
-SERPAPI_SET        = bool(os.getenv("SERPAPI_API_KEY"))
 with st.sidebar.expander("Environment checks", expanded=False):
     st.write("OPENAI_API_KEY:", "✅" if OPENAI_API_KEY_SET else "❌")
-    st.write("SERPAPI_API_KEY:", "✅" if SERPAPI_SET else "❌")
 
-# ---------- Sidebar: Developer section
+# ---------- Sidebar: Database Management
 st.sidebar.markdown("---")
-st.sidebar.header("🔧 Developer: Train & Manage Models")
-with st.sidebar.expander("Train Models", expanded=False):
-    tab3_render(models_dir=Path("./models"))
+st.sidebar.header("� Database Management")
+with st.sidebar.expander("Upload Databases", expanded=False):
+    # Job Description Database Upload
+    st.markdown("**Job Description Database**")
+    jd_csv = st.file_uploader("Upload JD Database (CSV)", type=["csv"], key="jd_upload",
+                             help="CSV with columns: role_title, jd_text, company, source_url, etc.")
+    if jd_csv:
+        try:
+            df = pd.read_csv(jd_csv)
+            st.session_state.jd_df = df
+            st.success(f"✅ JD Database loaded: {len(df)} entries")
+            st.write(f"**Columns:** {', '.join(df.columns)}")
+        except Exception as e:
+            st.error(f"Error loading JD database: {e}")
+    
+    st.markdown("---")
+    
+    # Course Database Upload  
+    st.markdown("**Course Database**")
+    course_csv = st.file_uploader("Upload Course Database (CSV)", type=["csv"], key="course_upload",
+                                 help="CSV with columns: course_title, course_url, skills, description, etc.")
+    if course_csv:
+        try:
+            df = pd.read_csv(course_csv)
+            st.session_state.training_df = df
+            st.success(f"✅ Course Database loaded: {len(df)} entries")
+            st.write(f"**Columns:** {', '.join(df.columns)}")
+        except Exception as e:
+            st.error(f"Error loading course database: {e}")
+    
+    # Show current database status
+    st.markdown("---")
+    st.markdown("**Current Status:**")
+    jd_count = len(st.session_state.get("jd_df", pd.DataFrame()))
+    course_count = len(st.session_state.get("training_df", pd.DataFrame()))
+    st.write(f"• JD Database: {jd_count} entries")
+    st.write(f"• Course Database: {course_count} entries")
 
 # ---------- Tabs
 T1, T2, T3, T4 = st.tabs([

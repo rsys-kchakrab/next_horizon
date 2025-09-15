@@ -5,7 +5,7 @@ import streamlit as st
 import pandas as pd
 
 from ml_training import rank_roles_for_resume, prepare_resume_text, rank_jds_within_role
-from web_tools import serpapi_search, openai_rank_roles, openai_rank_jds
+from web_tools import openai_rank_roles, openai_rank_jds
 
 def _get_resume_text() -> str:
     # Get the updated structured JSON from review & edit tab
@@ -80,10 +80,8 @@ def _get_jd_df() -> pd.DataFrame:
     return df if isinstance(df, pd.DataFrame) else pd.DataFrame()
 
 def render():
-    st.subheader("Aspirations — Role suggestions & matching")
-    
     # Add aspirations input box
-    st.markdown("### Your Career Aspirations")
+    st.markdown("### Career Aspirations")
     user_aspirations = st.text_area(
         "What are your career goals and aspirations?", 
         value=st.session_state.get("user_aspirations", ""),
@@ -111,7 +109,7 @@ def render():
         st.warning("JD database is empty. Upload `jd_database.csv` in the Dev tab.")
 
     st.markdown("### Role Suggestions")
-    mode = st.radio("Source", ["Trained Model","OpenAI + Web"], index=0 if st.session_state.get("role_model") else 1, horizontal=True)
+    mode = st.radio("Source", ["Trained Model","gpt-4o-mini"], index=0 if st.session_state.get("role_model") else 1, horizontal=True)
 
     if mode == "Trained Model":
         if not st.session_state.get("role_model"):
@@ -166,7 +164,7 @@ def render():
         snippets = [{"title": r, "link": "", "snippet": txt, "source": "jd_db"} for r, txt in grp.items() if r and txt]
         ranked_roles = openai_rank_roles(resume_text, snippets, top_k=k)
 
-        st.markdown("#### Suggested roles (OpenAI + embeddings/TF‑IDF)")
+        st.markdown("#### Suggested roles")
         for i, p in enumerate(ranked_roles, 1):
             st.write(f"**{i}. {p['role_title']}** — Match: **{int(round(p['score']*100,0))}%**")
 
@@ -174,7 +172,7 @@ def render():
         st.markdown("##### Show top JDs for a selected role")
         roles = [p["role_title"] for p in ranked_roles]
         sel = st.selectbox("Pick a role", roles, key="asp_sel_role_openai")
-        if st.button("Show top-5 JDs (OpenAI ranking)"):
+        if st.button("Show top-5 JDs"):
             rows = jd_df[jd_df["role_title"]==sel]
             jd_rows = rows[["role_title","company","source_title","source_url","jd_text"]].to_dict(orient="records")
             items = openai_rank_jds(resume_text, jd_rows, top_k=5)

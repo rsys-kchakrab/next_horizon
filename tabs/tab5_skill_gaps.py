@@ -95,8 +95,6 @@ def get_required_skills_for_role(role_title: str, jd_df: pd.DataFrame) -> list:
     return sorted(common_skills)
 
 def render():
-    st.subheader("Skill Gaps & Clarify (Ask-When-Uncertain)")
-    
     # Check if we have necessary data
     if not st.session_state.get("structured_json") or not st.session_state.get("chosen_role_title"):
         st.info("Complete Tabs 1-3: Upload resume, parse it, and select a role from 'Aspirations' tab.")
@@ -160,12 +158,6 @@ def render():
                 st.caption(f"... and {len(gaps) - 15} more")
         else:
             st.success("No major skill gaps detected!")
-    
-    # Skill coverage statistics
-    if required_skills:
-        coverage_pct = (len(matched_skills) / len(required_skills)) * 100
-        st.markdown(f"### 📊 Skill Coverage: {coverage_pct:.1f}%")
-        st.progress(coverage_pct / 100)
     
     # Clarification questions (if applicable)
     if gaps:
