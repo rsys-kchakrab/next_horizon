@@ -221,17 +221,17 @@ def render():
     has_trained_model = st.session_state.get("training_model") is not None
     
     # Define the two main options
-    mode_options = ["Trained Model", "gpt-4o-mini"]
+    mode_options = ["Trained Model", "Vector Search"]
     
     # Set default mode based on available resources
     if has_trained_model:
         default_mode = 0  # Trained Model
     else:
-        default_mode = 1  # gpt-4o-mini
+        default_mode = 1  # Vector Search
     
-    mode_c = st.radio("Source", mode_options, index=default_mode)
+    mode = st.radio("Source", mode_options, index=default_mode)
 
-    if mode_c == "Trained Model":
+    if mode == "Trained Model":
         if has_trained_model and has_training_dataset:
             st.markdown("### 🎯 Trained Model Recommendations")
             st.caption("Uses your trained model to classify and recommend courses from the training database.")
@@ -269,21 +269,15 @@ def render():
             else:
                 st.info("No course recommendations found in the training database for these skills.")
                 
-        elif has_trained_model and not has_training_dataset:
-            st.warning("⚠️ **Trained model is available but no training database found.**")
-            st.info("Please upload training_database.csv in the left panel (sidebar) to use trained model recommendations.")
-        elif not has_trained_model and has_training_dataset:
-            st.warning("⚠️ **No trained model available.**")
-            st.info("Please train a model in the Developer section (left panel) first.")
         else:
             st.warning("⚠️ **Both trained model and training database are required.**")
             st.info("1. Upload training_database.csv in the left panel (sidebar)")
             st.info("2. Train a model in the Developer section (left panel)")
     
-    elif mode_c == "gpt-4o-mini":
+    elif mode == "Vector Search":
         if has_training_dataset:
             if st.button("🚀 Find Courses", key="btn_openai_training"):
-                with st.spinner("Using gpt-4o-mini to find the best courses from training database..."):
+                with st.spinner("Using vector search to find the best courses from training database..."):
                     resume_text = st.session_state.get('cleaned_text', '')
                     recs = openai_rank_training_courses(gaps, resume_text, training_df, top_k=5)
                     
@@ -326,4 +320,4 @@ def render():
                     st.info("No courses found in the training database for the identified skill gaps.")
         else:
             st.warning("⚠️ **No training database available.**")
-            st.info("Please upload training_database.csv in the left panel (sidebar) to use gpt-4o-mini recommendations.")
+            st.info("Please upload training_database.csv in the left panel (sidebar) to use vector search recommendations.")

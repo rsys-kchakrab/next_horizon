@@ -52,7 +52,7 @@ def render():
         return  # Don't show Role Suggestions if no JD database
 
     st.markdown("### Role Suggestions")
-    mode = st.radio("Source", ["Trained Model","gpt-4o-mini"], index=0 if st.session_state.get("role_model") else 1, horizontal=True)
+    mode = st.radio("Source", ["Trained Model","Vector Search"], index=0 if st.session_state.get("role_model") else 1, horizontal=True)
 
     if mode == "Trained Model":
         if not st.session_state.get("role_model"):

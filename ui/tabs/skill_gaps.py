@@ -191,7 +191,7 @@ def render():
                 st.session_state.structured_json = new_json
                 after_missing = parse_quality(new_json)[1].get("missing", [])
                 sc_improve, det = clarify_improvement(before_missing, after_missing)
-                st.success(f"Applied. **Clarify Improvement:** {sc_improve:.2f}")
+                st.success("Applied clarification answers successfully!")
                 if det.get("fixed"): 
                     st.caption("Fixed: " + ", ".join(det["fixed"]))
                 
