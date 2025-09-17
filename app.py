@@ -16,9 +16,9 @@ os.environ.setdefault("OTEL_LOGS_EXPORTER", "none")
 from config.session_config import initialize_session_state, check_environment
 from ui.sidebar import render_sidebar
 from ui.tabs.resume_parsing import render as tab1_render
-from ui.tabs.role_recommendations import render as tab4_render  
-from ui.tabs.skill_gaps import render as tab5_render
-from ui.tabs.course_recommendations import render as tab6_render
+from ui.tabs.role_recommendations import render as tab2_render  
+from ui.tabs.skill_gaps import render as tab3_render
+from ui.tabs.course_recommendations import render as tab4_render
 
 def main():
     """Main application entry point"""
@@ -53,11 +53,11 @@ def main():
     with tab1:
         tab1_render()
     with tab2:
-        tab4_render()
+        tab2_render()
     with tab3:
-        tab5_render()
+        tab3_render()
     with tab4:
-        tab6_render()
+        tab4_render()
 
 if __name__ == "__main__":
     main()

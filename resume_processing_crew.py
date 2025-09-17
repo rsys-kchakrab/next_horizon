@@ -22,14 +22,18 @@ def _get_llm(model: str, temperature: float = 0.2):
     """Return an LLM object compatible with CrewAI Agents.
     Tries crewai.llm, then langchain_openai, then legacy langchain.llms.OpenAI.
     """
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
+    
     try:
         from crewai.llm import LLM  # type: ignore
-        return LLM(model=model, temperature=temperature, api_key=os.getenv("OPENAI_API_KEY"))
+        return LLM(model=model, temperature=temperature, api_key=api_key)
     except Exception:
         pass
     try:
         from langchain_openai import ChatOpenAI  # type: ignore
-        return ChatOpenAI(model=model, temperature=temperature, api_key=os.getenv("OPENAI_API_KEY"))
+        return ChatOpenAI(model=model, temperature=temperature, api_key=api_key)
     except Exception:
         pass
     try:

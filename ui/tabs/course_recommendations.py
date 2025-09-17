@@ -14,14 +14,15 @@ def openai_rank_training_courses(gaps: List[str], resume_text: str, training_df,
     """
     import os
     import numpy as np
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    from sklearn.metrics.pairwise import cosine_similarity
     
     if training_df.empty or not gaps:
         return {}
     
     # Get OpenAI API key
     api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
+    
     recommendations = {}
     
     for gap in gaps:
@@ -49,51 +50,25 @@ def openai_rank_training_courses(gaps: List[str], resume_text: str, training_df,
         user_context = f"Resume: {resume_text[:1000]} Skill Gap: {gap}"
         
         # Use OpenAI for intelligent ranking
-        scores = None
-        if api_key:
-            try:
-                try:
-                    from openai import OpenAI
-                    client = OpenAI(api_key=api_key)
-                    model = "text-embedding-3-small"
-                    
-                    # Get embeddings
-                    user_emb = client.embeddings.create(model=model, input=user_context).data[0].embedding
-                    course_embs = client.embeddings.create(model=model, input=course_descriptions).data
-                    
-                    # Calculate similarities
-                    scores = []
-                    for course_emb in course_embs:
-                        similarity = np.dot(user_emb, course_emb.embedding) / (
-                            np.linalg.norm(user_emb) * np.linalg.norm(course_emb.embedding) + 1e-9
-                        )
-                        scores.append(float(similarity))
-                        
-                except Exception:
-                    # Fallback to older OpenAI API
-                    import openai
-                    openai.api_key = api_key
-                    model = "text-embedding-3-small"
-                    
-                    user_emb = openai.Embedding.create(model=model, input=user_context)["data"][0]["embedding"]
-                    course_embs = openai.Embedding.create(model=model, input=course_descriptions)["data"]
-                    
-                    scores = []
-                    for course_emb in course_embs:
-                        similarity = np.dot(user_emb, course_emb["embedding"]) / (
-                            np.linalg.norm(user_emb) * np.linalg.norm(course_emb["embedding"]) + 1e-9
-                        )
-                        scores.append(float(similarity))
-                        
-            except Exception:
-                scores = None
-        
-        # Fallback to TF-IDF if OpenAI fails
-        if scores is None:
-            vectorizer = TfidfVectorizer(stop_words='english', max_features=5000)
-            tfidf_matrix = vectorizer.fit_transform([user_context] + course_descriptions)
-            similarities = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:])
-            scores = similarities[0].tolist()
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=api_key)
+            model = "text-embedding-3-small"
+            
+            # Get embeddings
+            user_emb = client.embeddings.create(model=model, input=user_context).data[0].embedding
+            course_embs = client.embeddings.create(model=model, input=course_descriptions).data
+            
+            # Calculate similarities
+            scores = []
+            for course_emb in course_embs:
+                similarity = np.dot(user_emb, course_emb.embedding) / (
+                    np.linalg.norm(user_emb) * np.linalg.norm(course_emb.embedding) + 1e-9
+                )
+                scores.append(float(similarity))
+                
+        except Exception as e:
+            raise RuntimeError(f"OpenAI API error: {str(e)}. Please check your API key and connection.")
         
         # Rank and select top courses
         course_scores = list(zip(relevant_courses.iterrows(), scores))

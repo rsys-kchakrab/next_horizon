@@ -20,49 +20,27 @@ def _norm(s: str) -> str:
     s = (s or "").strip()
     return re.sub(r"\s+", " ", s)
 
-def _tfidf_scores(query: str, docs: List[str]) -> List[float]:
-    """Fallback TF-IDF scoring when OpenAI is not available"""
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    from sklearn.metrics.pairwise import cosine_similarity
-    
-    corpus = [query] + docs
-    vec = TfidfVectorizer(stop_words="english", max_features=3000)
-    X = vec.fit_transform(corpus)
-    qv, D = X[0:1], X[1:]
-    return cosine_similarity(qv, D)[0].tolist()
-
 def openai_rank_roles(resume_text: str, role_snippets: List[Dict[str, Any]], top_k: int = 5) -> List[Dict[str, Any]]:
-    """Rank job roles using OpenAI embeddings or TF-IDF fallback"""
+    """Rank job roles using OpenAI embeddings"""
     resume_text = _norm(resume_text)
     if not role_snippets:
         return []
         
     api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
+        
     texts = [str(s.get("snippet", "")) for s in role_snippets]
-    scores: List[float] = []
     
-    if api_key:
-        try:
-            try:
-                from openai import OpenAI
-                client = OpenAI(api_key=api_key)
-                model = "text-embedding-3-small"
-                emb_resume = client.embeddings.create(model=model, input=resume_text).data[0].embedding
-                emb_snips = client.embeddings.create(model=model, input=texts).data
-                for s, emb_s in zip(role_snippets, emb_snips):
-                    scores.append(_cosine(emb_resume, emb_s.embedding))
-            except Exception:
-                import openai
-                openai.api_key = api_key
-                model = "text-embedding-3-small"
-                emb_resume = openai.Embedding.create(model=model, input=resume_text)["data"][0]["embedding"]
-                emb_snips = openai.Embedding.create(model=model, input=texts)["data"]
-                for s, emb_s in zip(role_snippets, emb_snips):
-                    scores.append(_cosine(emb_resume, emb_s["embedding"]))
-        except Exception:
-            scores = _tfidf_scores(resume_text, texts)
-    else:
-        scores = _tfidf_scores(resume_text, texts)
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        model = "text-embedding-3-small"
+        emb_resume = client.embeddings.create(model=model, input=resume_text).data[0].embedding
+        emb_snips = client.embeddings.create(model=model, input=texts).data
+        scores = [_cosine(emb_resume, emb_s.embedding) for emb_s in emb_snips]
+    except Exception as e:
+        raise RuntimeError(f"OpenAI API error: {str(e)}. Please check your API key and connection.")
     
     ranked = list(zip(role_snippets, scores))
     ranked.sort(key=lambda x: x[1], reverse=True)
@@ -77,37 +55,26 @@ def openai_rank_roles(resume_text: str, role_snippets: List[Dict[str, Any]], top
     return out
 
 def openai_rank_jds(resume_text: str, jd_rows: List[Dict[str, Any]], top_k: int = 5) -> List[Dict[str, Any]]:
-    """Rank job descriptions using OpenAI embeddings or TF-IDF fallback"""
+    """Rank job descriptions using OpenAI embeddings"""
     resume_text = _norm(resume_text)
     if not jd_rows:
         return []
         
     api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
+        
     texts = [str(x.get("jd_text", "")) for x in jd_rows]
-    scores: List[float] = []
     
-    if api_key:
-        try:
-            try:
-                from openai import OpenAI
-                client = OpenAI(api_key=api_key)
-                model = "text-embedding-3-small"
-                emb_resume = client.embeddings.create(model=model, input=resume_text).data[0].embedding
-                emb_snips = client.embeddings.create(model=model, input=texts).data
-                for r, emb_s in zip(jd_rows, emb_snips):
-                    scores.append(_cosine(emb_resume, emb_s.embedding))
-            except Exception:
-                import openai
-                openai.api_key = api_key
-                model = "text-embedding-3-small"
-                emb_resume = openai.Embedding.create(model=model, input=resume_text)["data"][0]["embedding"]
-                emb_snips = openai.Embedding.create(model=model, input=texts)["data"]
-                for r, emb_s in zip(jd_rows, emb_snips):
-                    scores.append(_cosine(emb_resume, emb_s["embedding"]))
-        except Exception:
-            scores = _tfidf_scores(resume_text, texts)
-    else:
-        scores = _tfidf_scores(resume_text, texts)
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        model = "text-embedding-3-small"
+        emb_resume = client.embeddings.create(model=model, input=resume_text).data[0].embedding
+        emb_snips = client.embeddings.create(model=model, input=texts).data
+        scores = [_cosine(emb_resume, emb_s.embedding) for emb_s in emb_snips]
+    except Exception as e:
+        raise RuntimeError(f"OpenAI API error: {str(e)}. Please check your API key and connection.")
     
     ranked = list(zip(jd_rows, scores))
     ranked.sort(key=lambda x: x[1], reverse=True)
@@ -124,48 +91,27 @@ def openai_rank_jds(resume_text: str, jd_rows: List[Dict[str, Any]], top_k: int 
     return out
 
 def openai_rank_courses(gaps, resume_text: str, snippets: List[Dict[str, Any]], top_k: int = 5) -> List[Dict[str, Any]]:
-    """Rank course snippets against the user's gaps + resume using OpenAI or TF-IDF"""
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    from sklearn.metrics.pairwise import cosine_similarity
-
+    """Rank course snippets against the user's gaps + resume using OpenAI embeddings"""
     gaps = [str(g) for g in (gaps or []) if str(g).strip()]
     bundle = " ".join(gaps + [resume_text or ""]).strip()
     docs = [str(s.get("snippet", "")) for s in (snippets or [])]
 
-    # Try OpenAI embeddings if available
     api_key = os.getenv("OPENAI_API_KEY")
-    scores = None
-    
-    if api_key:
-        try:
-            try:
-                from openai import OpenAI
-                client = OpenAI(api_key=api_key)
-                model = "text-embedding-3-small"
-                emb_q = client.embeddings.create(model=model, input=bundle).data[0].embedding
-                emb_docs = client.embeddings.create(model=model, input=docs).data
-                scores = [
-                    float(np.dot(emb_q, d.embedding) / (np.linalg.norm(emb_q) * np.linalg.norm(d.embedding) + 1e-9))
-                    for d in emb_docs
-                ]
-            except Exception:
-                import openai
-                openai.api_key = api_key
-                model = "text-embedding-3-small"
-                emb_q = openai.Embedding.create(model=model, input=bundle)["data"][0]["embedding"]
-                emb_docs = openai.Embedding.create(model=model, input=docs)["data"]
-                scores = [
-                    float(np.dot(emb_q, d["embedding"]) / (np.linalg.norm(emb_q) * np.linalg.norm(d["embedding"]) + 1e-9))
-                    for d in emb_docs
-                ]
-        except Exception:
-            scores = None
-    
-    if scores is None:
-        vec = TfidfVectorizer(stop_words="english", max_features=4000)
-        X = vec.fit_transform([bundle] + docs)
-        qv, D = X[0:1], X[1:]
-        scores = cosine_similarity(qv, D)[0].tolist()
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
+        
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        model = "text-embedding-3-small"
+        emb_q = client.embeddings.create(model=model, input=bundle).data[0].embedding
+        emb_docs = client.embeddings.create(model=model, input=docs).data
+        scores = [
+            float(np.dot(emb_q, d.embedding) / (np.linalg.norm(emb_q) * np.linalg.norm(d.embedding) + 1e-9))
+            for d in emb_docs
+        ]
+    except Exception as e:
+        raise RuntimeError(f"OpenAI API error: {str(e)}. Please check your API key and connection.")
 
     pairs = list(zip(snippets or [], scores))
     pairs.sort(key=lambda x: x[1], reverse=True)
