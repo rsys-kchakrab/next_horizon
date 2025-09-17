@@ -17,7 +17,7 @@ except Exception:
 
 def render():
     st.subheader("Upload Resume")
-    up = st.file_uploader("Resume (PDF / DOCX / TXT)", type=["pdf","docx","txt"], key="resume_v5_mod")
+    up = st.file_uploader("Upload Resume", type=["pdf","docx","txt"], key="resume_v5_mod", label_visibility="hidden")
     c1, c2 = st.columns(2)
     with c1:
         run = st.button("🚀 Run Extraction & Parsing", disabled=up is None)
@@ -45,7 +45,7 @@ def render():
         st.session_state.structured_json = struct
 
     if st.session_state.get("validation_report"):
-        st.subheader("🧪 Validation Report (from pipeline)")
+        st.markdown("##### 🧪 Validation Report")
         st.text(st.session_state.validation_report)
 
     # Display and edit parsed resume data

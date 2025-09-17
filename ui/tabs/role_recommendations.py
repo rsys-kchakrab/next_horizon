@@ -4,7 +4,7 @@ from __future__ import annotations
 import streamlit as st
 import pandas as pd
 
-from ml_training import rank_roles_for_resume, rank_jds_within_role
+from utils.ml_inference import rank_roles_for_resume, rank_jds_within_role
 from ai.openai_client import openai_rank_roles, openai_rank_jds
 from utils.resume_text_builder import build_resume_text
 
@@ -17,6 +17,11 @@ def _get_jd_df() -> pd.DataFrame:
     return df if isinstance(df, pd.DataFrame) else pd.DataFrame()
 
 def render():
+    # Check if resume is uploaded and parsed (structured_json exists)
+    if not st.session_state.get("structured_json"):
+        st.info("Complete Tabs 1: Upload a resume and complete the Review & Edit section")
+        return
+    
     # Add aspirations input box
     st.markdown("### Career Aspirations")
     user_aspirations = st.text_area(
@@ -44,6 +49,7 @@ def render():
         st.info("Upload a resume in Tab 1 and complete the Review & Edit section in Tab 2 for better role matching.")
     if jd_df.empty:
         st.warning("JD database is empty. Upload `jd_database.csv` in the Dev tab.")
+        return  # Don't show Role Suggestions if no JD database
 
     st.markdown("### Role Suggestions")
     mode = st.radio("Source", ["Trained Model","gpt-4o-mini"], index=0 if st.session_state.get("role_model") else 1, horizontal=True)
@@ -90,7 +96,6 @@ def render():
         k = st.slider("Top-K roles", 1, 10, 5, key="asp_k_web")
         if jd_df.empty:
             st.error("JD database required to summarize roles. Upload jd_database.csv in the Developer section (sidebar).")
-            st.info("💡 Note: The JD database (job descriptions) is different from the training database (courses). You need to upload both separately.")
             return
         
         # Validate JD database structure

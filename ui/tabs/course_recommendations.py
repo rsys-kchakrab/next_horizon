@@ -6,7 +6,7 @@ import pandas as pd
 import re
 from collections import Counter
 from typing import Dict, List, Any
-from ml_training import recommend_courses_by_model, recommend_courses_from_training_dataset
+from utils.ml_inference import recommend_courses_by_model, recommend_courses_from_training_dataset
 
 def openai_rank_training_courses(gaps: List[str], resume_text: str, training_df, top_k: int = 5) -> Dict[str, List[Dict[str, Any]]]:
     """
@@ -200,8 +200,8 @@ def get_skill_gaps_for_role(role_title: str, candidate_skills: list, jd_df: pd.D
 
 def render():
     # Check if we have necessary data
-    if not st.session_state.get("structured_json") or not st.session_state.get("chosen_role_title"):
-        st.info("Complete Tabs 1-4: Upload resume, parse it, and select a role from 'Aspirations' tab.")
+    if not st.session_state.get("structured_json") or not st.session_state.get("chosen_role_title") or not st.session_state.get("skill_gaps"):
+        st.info("Complete Tabs 1-3: Upload resume, parse it, select a role from 'Aspirations' tab, and find the skill gaps")
         return
     
     jd_df = st.session_state.get("jd_df", pd.DataFrame())
@@ -215,7 +215,6 @@ def render():
     # Use stored skill gaps from skill gaps tab (if available) or calculate fresh
     if st.session_state.get("skill_gaps") is not None:
         gaps = st.session_state.skill_gaps
-        st.info("🔄 Using skill gaps from your analysis (including any clarification answers)")
     else:
         # Fallback: calculate gaps if not available in session
         gaps = get_skill_gaps_for_role(role_title, candidate_skills, jd_df)
@@ -271,7 +270,7 @@ def render():
             if recs:
                 for gap, courses in recs.items():
                     if courses:
-                        st.markdown(f"**{gap}** ({len(courses)} courses)")
+                        st.markdown(f"### {gap} ({len(courses)} courses)")
                         
                         for course in courses:
                             title = course.get('title', 'Unknown Course')
@@ -308,17 +307,15 @@ def render():
     
     elif mode_c == "gpt-4o-mini":
         if has_training_dataset:
-            if st.button("Find Courses", type="primary", key="btn_openai_training"):
+            if st.button("🚀 Find Courses", key="btn_openai_training"):
                 with st.spinner("Using gpt-4o-mini to find the best courses from training database..."):
                     resume_text = st.session_state.get('cleaned_text', '')
                     recs = openai_rank_training_courses(gaps, resume_text, training_df, top_k=5)
                     
                 if recs:
-                    st.markdown("### 🎯 AI-Recommended Courses")
-                    
                     for gap, courses in recs.items():
                         if courses:
-                            st.markdown(f"**{gap}** ({len(courses)} courses)")
+                            st.markdown(f"### {gap} ({len(courses)} courses)")
                             
                             for course in courses:
                                 title = course.get('title', 'Unknown Course')

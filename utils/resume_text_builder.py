@@ -1,7 +1,52 @@
 # FILE: utils/resume_text_builder.py - Resume Text Construction Utilities
 from __future__ import annotations
+from typing import Any, Dict, List
 import streamlit as st
-from ml_training import prepare_resume_text
+
+def prepare_resume_text(resume_doc: Dict[str, Any]) -> str:
+    """Convert structured resume data to text format for ML processing"""
+    parts: List[str] = []
+    if not isinstance(resume_doc, dict):
+        return str(resume_doc) if resume_doc else ""
+    
+    # Extract current role
+    cr = resume_doc.get("current_role") or {}
+    if isinstance(cr, dict):
+        parts.append(str(cr.get("role","")))
+        parts.append(str(cr.get("summary","")))
+    elif isinstance(cr, str):
+        parts.append(cr)
+    
+    # Extract skills
+    skills = resume_doc.get("technical_skills") or resume_doc.get("skills") or []
+    if isinstance(skills, (list, tuple)):
+        parts.extend([str(s) for s in skills if s])
+    elif isinstance(skills, str):
+        parts.append(skills)
+    
+    # Extract work experience
+    for w in (resume_doc.get("work_experience") or []):
+        if not isinstance(w, dict): 
+            parts.append(str(w))
+            continue
+        parts.append(str(w.get("title","")))
+        parts.append(str(w.get("company","")))
+        parts.append(str(w.get("summary","")))
+        b = w.get("bullets") or w.get("responsibilities")
+        if isinstance(b, str): 
+            parts.append(b)
+        elif isinstance(b, (list, tuple)): 
+            parts.extend([str(x) for x in b if x])
+    
+    # Extract projects
+    for p in (resume_doc.get("projects") or []):
+        if isinstance(p, dict):
+            parts.append(str(p.get("name","")))
+            parts.append(str(p.get("description","")))
+        else:
+            parts.append(str(p))
+    
+    return " ".join([x for x in parts if x]).strip()
 
 def build_resume_text() -> str:
     """Build comprehensive resume text from structured JSON data"""

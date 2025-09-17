@@ -97,7 +97,7 @@ def get_required_skills_for_role(role_title: str, jd_df: pd.DataFrame) -> list:
 def render():
     # Check if we have necessary data
     if not st.session_state.get("structured_json") or not st.session_state.get("chosen_role_title"):
-        st.info("Complete Tabs 1-3: Upload resume, parse it, and select a role from 'Aspirations' tab.")
+        st.info("Complete Tabs 1-2: Upload resume, parse it, and select a role from 'Aspirations' tab.")
         return
     
     jd_df = st.session_state.get("jd_df", pd.DataFrame())
