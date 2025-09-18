@@ -3,109 +3,32 @@
 from __future__ import annotations
 import streamlit as st
 import pandas as pd
-import re
-from collections import Counter
 from agents.clarifier_agent import ClarifierAgent
 from utils.compute_metrics import parse_quality, clarify_improvement
-
-def extract_skills_from_jd_text(jd_text: str) -> list:
-    """Extract skills from job description text using basic NLP patterns"""
-    if not jd_text or pd.isna(jd_text):
-        return []
-    
-    # Convert to lowercase for matching
-    text = str(jd_text).lower()
-    
-    # Common skill patterns and keywords
-    skill_patterns = [
-        # Programming languages
-        r'\b(?:python|java|javascript|c\+\+|c#|go|rust|swift|kotlin|php|ruby|scala|r\b)\b',
-        # Web technologies
-        r'\b(?:html|css|react|angular|vue|node\.?js|express|django|flask|spring|laravel)\b',
-        # Databases
-        r'\b(?:sql|mysql|postgresql|mongodb|redis|elasticsearch|oracle|sqlite)\b',
-        # Cloud platforms
-        r'\b(?:aws|azure|gcp|google cloud|docker|kubernetes|terraform|ansible)\b',
-        # Data science
-        r'\b(?:pandas|numpy|scikit-learn|tensorflow|pytorch|jupyter|tableau|power bi)\b',
-        # DevOps/Tools
-        r'\b(?:git|jenkins|gitlab|github|jira|confluence|linux|windows|mac)\b',
-        # Frameworks
-        r'\b(?:\.net|spring boot|rails|next\.js|nuxt\.js|fastapi)\b',
-        # Other technical skills
-        r'\b(?:api|rest|graphql|microservices|agile|scrum|kanban|ci/cd|machine learning|ai|blockchain)\b'
-    ]
-    
-    skills = []
-    for pattern in skill_patterns:
-        matches = re.findall(pattern, text)
-        skills.extend(matches)
-    
-    # Also look for explicit skill mentions
-    skill_keywords = [
-        'experience with', 'knowledge of', 'proficient in', 'familiar with',
-        'skills in', 'expertise in', 'background in', 'experience in'
-    ]
-    
-    for keyword in skill_keywords:
-        if keyword in text:
-            # Extract text after the keyword (up to next sentence or comma)
-            pattern = f'{keyword}([^.;]+)'
-            matches = re.findall(pattern, text)
-            for match in matches:
-                # Split by common delimiters and clean up
-                potential_skills = re.split(r'[,;/&\n]', match.strip())
-                for skill in potential_skills[:3]:  # Limit to first 3 to avoid noise
-                    skill = skill.strip().lower()
-                    if len(skill) > 2 and len(skill) < 30:  # Reasonable skill name length
-                        skills.append(skill)
-    
-    # Remove duplicates and clean up
-    unique_skills = list(set([skill.strip() for skill in skills if skill.strip()]))
-    return unique_skills
-
-def get_required_skills_for_role(role_title: str, jd_df: pd.DataFrame) -> list:
-    """Extract required skills for a specific role from job descriptions"""
-    if jd_df.empty or not role_title:
-        return []
-    
-    # Filter JDs for the selected role
-    role_jds = jd_df[jd_df['role_title'].str.lower() == role_title.lower()]
-    
-    if role_jds.empty:
-        return []
-    
-    # Extract skills from all JDs for this role
-    all_skills = []
-    for _, row in role_jds.iterrows():
-        jd_text = row.get('jd_text', '')
-        skills = extract_skills_from_jd_text(jd_text)
-        all_skills.extend(skills)
-    
-    # Count skill frequency and return most common ones
-    skill_counts = Counter(all_skills)
-    # Return skills that appear in at least 20% of JDs for this role or top 20 skills
-    min_count = max(1, len(role_jds) * 0.2)
-    common_skills = [skill for skill, count in skill_counts.items() if count >= min_count]
-    
-    # If too few skills, take top 20 most frequent
-    if len(common_skills) < 10:
-        common_skills = [skill for skill, count in skill_counts.most_common(20)]
-    
-    return sorted(common_skills)
+from utils.skill_extraction import (
+    extract_skills_from_jd_text, 
+    extract_skills_from_aspirations, 
+    get_required_skills_for_role, 
+    calculate_skill_gaps
+)
+from utils.session_validators import (
+    validate_role_selected,
+    get_jd_dataframe,
+    get_candidate_skills,
+    get_current_role,
+    get_user_aspirations
+)
 
 def render():
     # Check if we have necessary data
-    if not st.session_state.get("structured_json") or not st.session_state.get("chosen_role_title"):
-        st.info("Complete Tabs 1-2: Upload resume, parse it, and select a role from 'Aspirations' tab.")
+    if not validate_role_selected():
         return
     
-    jd_df = st.session_state.get("jd_df", pd.DataFrame())
+    jd_df = get_jd_dataframe()
     if jd_df.empty:
-        st.warning("JD database is required. Upload jd_database.csv in the sidebar.")
         return
     
-    role_title = st.session_state.chosen_role_title
+    role_title = get_current_role()
     st.write(f"**Analyzing skill gaps for role:** {role_title}")
     
     # Get required skills for the selected role from JD database
@@ -116,25 +39,17 @@ def render():
         return
     
     # Get candidate's current skills
-    candidate_skills = st.session_state.structured_json.get("technical_skills", [])
-    candidate_skills_lower = [skill.lower().strip() for skill in candidate_skills]
+    candidate_skills = get_candidate_skills()
     
-    # Calculate skill gaps
-    gaps = []
-    matched_skills = []
+    # Also get skills from aspirations
+    user_aspirations = get_user_aspirations()
+    if user_aspirations:
+        aspirations_skills = extract_skills_from_aspirations(user_aspirations)
+        candidate_skills.extend(aspirations_skills)
+        candidate_skills = list(set(candidate_skills))  # Remove duplicates
     
-    for req_skill in required_skills:
-        req_skill_lower = req_skill.lower().strip()
-        # Check for exact match or partial match
-        is_matched = any(
-            req_skill_lower in candidate_skill or candidate_skill in req_skill_lower
-            for candidate_skill in candidate_skills_lower
-        )
-        
-        if is_matched:
-            matched_skills.append(req_skill)
-        else:
-            gaps.append(req_skill)
+    # Calculate skill gaps using the shared utility function
+    gaps, matched_skills = calculate_skill_gaps(candidate_skills, required_skills)
     
     # Store skill gaps in session state for use in course recommendations
     st.session_state.skill_gaps = gaps
@@ -197,26 +112,17 @@ def render():
                 
                 # Recalculate skill gaps with updated information
                 updated_candidate_skills = new_json.get("technical_skills", [])
-                updated_gaps = []
-                updated_matched_skills = []
-                updated_candidate_skills_lower = [skill.lower().strip() for skill in updated_candidate_skills]
+                
+                # Also include aspirations skills in updated calculation
+                if user_aspirations:
+                    updated_aspirations_skills = extract_skills_from_aspirations(user_aspirations)
+                    updated_candidate_skills.extend(updated_aspirations_skills)
+                    updated_candidate_skills = list(set(updated_candidate_skills))  # Remove duplicates
+                
+                # Recalculate gaps using shared utility
+                updated_gaps, updated_matched_skills = calculate_skill_gaps(updated_candidate_skills, required_skills)
                 
                 st.info(f"🔄 Updated technical skills: {', '.join(updated_candidate_skills)}")
-                
-                for req_skill in required_skills:
-                    req_skill_lower = req_skill.lower().strip()
-                    # Improved matching: exact match, partial match in both directions
-                    is_matched = any(
-                        req_skill_lower == candidate_skill or 
-                        req_skill_lower in candidate_skill or 
-                        candidate_skill in req_skill_lower
-                        for candidate_skill in updated_candidate_skills_lower
-                    )
-                    
-                    if is_matched:
-                        updated_matched_skills.append(req_skill)
-                    else:
-                        updated_gaps.append(req_skill)
                 
                 # Update session state with new gaps
                 st.session_state.skill_gaps = updated_gaps

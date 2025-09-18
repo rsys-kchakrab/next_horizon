@@ -3,10 +3,18 @@
 from __future__ import annotations
 import streamlit as st
 import pandas as pd
-import re
-from collections import Counter
 from typing import Dict, List, Any
 from utils.ml_inference import recommend_courses_by_model, recommend_courses_from_training_dataset
+from utils.skill_extraction import get_required_skills_for_role, calculate_skill_gaps
+from utils.session_validators import (
+    validate_skill_gaps_completed, 
+    get_jd_dataframe, 
+    get_training_dataframe,
+    get_resume_text,
+    get_candidate_skills,
+    get_current_role,
+    get_skill_gaps
+)
 
 def openai_rank_training_courses(gaps: List[str], resume_text: str, training_df, top_k: int = 5) -> Dict[str, List[Dict[str, Any]]]:
     """
@@ -92,107 +100,24 @@ def openai_rank_training_courses(gaps: List[str], resume_text: str, training_df,
     
     return recommendations
 
-def extract_skills_from_jd_text(jd_text: str) -> list:
-    """Extract skills from job description text using basic NLP patterns"""
-    if not jd_text or pd.isna(jd_text):
-        return []
-    
-    # Convert to lowercase for matching
-    text = str(jd_text).lower()
-    
-    # Common skill patterns and keywords
-    skill_patterns = [
-        # Programming languages
-        r'\b(?:python|java|javascript|c\+\+|c#|go|rust|swift|kotlin|php|ruby|scala|r\b)\b',
-        # Web technologies
-        r'\b(?:html|css|react|angular|vue|node\.?js|express|django|flask|spring|laravel)\b',
-        # Databases
-        r'\b(?:sql|mysql|postgresql|mongodb|redis|elasticsearch|oracle|sqlite)\b',
-        # Cloud platforms
-        r'\b(?:aws|azure|gcp|google cloud|docker|kubernetes|terraform|ansible)\b',
-        # Data science
-        r'\b(?:pandas|numpy|scikit-learn|tensorflow|pytorch|jupyter|tableau|power bi)\b',
-        # DevOps/Tools
-        r'\b(?:git|jenkins|gitlab|github|jira|confluence|linux|windows|mac)\b',
-        # Frameworks
-        r'\b(?:\.net|spring boot|rails|next\.js|nuxt\.js|fastapi)\b',
-        # Other technical skills
-        r'\b(?:api|rest|graphql|microservices|agile|scrum|kanban|ci/cd|machine learning|ai|blockchain)\b'
-    ]
-    
-    skills = []
-    for pattern in skill_patterns:
-        matches = re.findall(pattern, text)
-        skills.extend(matches)
-    
-    # Remove duplicates and clean up
-    unique_skills = list(set([skill.strip() for skill in skills if skill.strip()]))
-    return unique_skills
-
-def get_skill_gaps_for_role(role_title: str, candidate_skills: list, jd_df: pd.DataFrame) -> list:
-    """Get skill gaps for a specific role from job descriptions"""
-    if jd_df.empty or not role_title:
-        return []
-    
-    # Filter JDs for the selected role
-    role_jds = jd_df[jd_df['role_title'].str.lower() == role_title.lower()]
-    
-    if role_jds.empty:
-        return []
-    
-    # Extract skills from all JDs for this role
-    all_required_skills = []
-    for _, row in role_jds.iterrows():
-        jd_text = row.get('jd_text', '')
-        skills = extract_skills_from_jd_text(jd_text)
-        all_required_skills.extend(skills)
-    
-    # Count skill frequency and get common required skills
-    skill_counts = Counter(all_required_skills)
-    min_count = max(1, len(role_jds) * 0.2)
-    required_skills = [skill for skill, count in skill_counts.items() if count >= min_count]
-    
-    # If too few skills, take top 20 most frequent
-    if len(required_skills) < 10:
-        required_skills = [skill for skill, count in skill_counts.most_common(20)]
-    
-    # Calculate gaps
-    candidate_skills_lower = [skill.lower().strip() for skill in candidate_skills]
-    gaps = []
-    
-    for req_skill in required_skills:
-        req_skill_lower = req_skill.lower().strip()
-        # Check for exact match or partial match
-        is_matched = any(
-            req_skill_lower in candidate_skill or candidate_skill in req_skill_lower
-            for candidate_skill in candidate_skills_lower
-        )
-        
-        if not is_matched:
-            gaps.append(req_skill)
-    
-    return sorted(gaps)
-
 def render():
     # Check if we have necessary data
-    if not st.session_state.get("structured_json") or not st.session_state.get("chosen_role_title") or not st.session_state.get("skill_gaps"):
-        st.info("Complete Tabs 1-3: Upload resume, parse it, select a role from 'Aspirations' tab, and find the skill gaps")
+    if not validate_skill_gaps_completed():
         return
     
-    jd_df = st.session_state.get("jd_df", pd.DataFrame())
+    jd_df = get_jd_dataframe()
     if jd_df.empty:
-        st.warning("JD database is required. Upload jd_database.csv in the sidebar.")
         return
     
-    role_title = st.session_state.chosen_role_title
-    candidate_skills = st.session_state.structured_json.get("technical_skills", [])
+    role_title = get_current_role()
+    candidate_skills = get_candidate_skills()
     
     # Use stored skill gaps from skill gaps tab (if available) or calculate fresh
-    if st.session_state.get("skill_gaps") is not None:
-        gaps = st.session_state.skill_gaps
-    else:
+    gaps = get_skill_gaps()
+    if not gaps:
         # Fallback: calculate gaps if not available in session
-        gaps = get_skill_gaps_for_role(role_title, candidate_skills, jd_df)
+        required_skills = get_required_skills_for_role(role_title, jd_df)
+        gaps, _ = calculate_skill_gaps(candidate_skills, required_skills)
         st.info("⚠️ Calculating fresh skill gaps. Visit 'Skill Gap Analysis' tab first for better results.")
     
     if not gaps:
@@ -214,7 +139,7 @@ def render():
         st.caption("💡 Tip: Complete the Skill Gap Analysis tab first for more accurate recommendations")
     
     # Check for training dataset
-    training_df = st.session_state.get("training_df", pd.DataFrame())
+    training_df = get_training_dataframe()
     has_training_dataset = not training_df.empty
     
     # Check for trained model
@@ -278,7 +203,7 @@ def render():
         if has_training_dataset:
             if st.button("🚀 Find Courses", key="btn_openai_training"):
                 with st.spinner("Using vector search to find the best courses from training database..."):
-                    resume_text = st.session_state.get('cleaned_text', '')
+                    resume_text = get_resume_text()
                     recs = openai_rank_training_courses(gaps, resume_text, training_df, top_k=5)
                     
                 if recs:
