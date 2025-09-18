@@ -48,7 +48,7 @@ def render():
 
     # Display and edit parsed resume data
     if st.session_state.get("structured_json"):
-        st.subheader("📝 Review & Edit Extracted Fields")
+        st.subheader("📝 Review & Edit")
         sj = st.session_state.get("structured_json", {})
         
         # Initialize work experience and education lists if not present
@@ -97,8 +97,26 @@ def render():
             with col2:
                 current_company = st.text_input("Current Company", value=cr.get("company", ""))
             
-            # 3. Work Experience - Separate boxes for each job
-            st.markdown("### 3. Work Experience")
+            # 3. Technical Skills
+            st.markdown("### 3. Technical Skills")
+            tech_skills = st.text_input("Technical Skills (comma-separated)",
+                                       value=", ".join(sj.get("technical_skills", []) or []),
+                                       help="e.g., Python, Java, SQL, Machine Learning")
+            
+            # 4. Career Level
+            st.markdown("### 4. Career Level")
+            career_level = st.text_input("Career Level",
+                                        value=sj.get("career_level", ""),
+                                        help="e.g., Junior, Mid-level, Senior, Lead, Manager, Director")
+            
+            # 5. Industry Focus
+            st.markdown("### 5. Industry Focus")
+            industry_focus = st.text_input("Industry Focus",
+                                          value=sj.get("industry_focus", ""),
+                                          help="e.g., Technology, Healthcare, Finance, Manufacturing")
+            
+            # 6. Work Experience - Separate boxes for each job
+            st.markdown("### 6. Work Experience")
             work_experiences = []
             wx_list = sj.get("work_experience", []) or []
             
@@ -127,8 +145,34 @@ def render():
                     "responsibilities": responsibilities
                 })
             
-            # 4. Education - Separate boxes for each degree
-            st.markdown("### 4. Education")
+            # 7. Key Achievements
+            st.markdown("### 7. Key Achievements")
+            key_achievements = st.text_area("Key Achievements (one per line)",
+                                           value="\n".join(sj.get("key_achievements", []) or []),
+                                           height=100,
+                                           help="List your major accomplishments and achievements")
+            
+            # 8. Soft Skills
+            st.markdown("### 8. Soft Skills")
+            soft_skills = st.text_input("Soft Skills (comma-separated)",
+                                       value=", ".join(sj.get("soft_skills", []) or []),
+                                       help="e.g., Leadership, Communication, Problem Solving")
+            
+            # 9. Location
+            st.markdown("### 9. Location")
+            location = st.text_input("Location",
+                                    value=sj.get("location", ""),
+                                    help="City, State, Country")
+            
+            # 10. Projects
+            st.markdown("### 10. Projects")
+            projects = st.text_area("Projects (one per line)",
+                                   value="\n".join(sj.get("projects", []) or []),
+                                   height=100,
+                                   help="List significant projects you've worked on")
+            
+            # 11. Education - Separate boxes for each degree
+            st.markdown("### 11. Education")
             educations = []
             edu_list = sj.get("education", []) or []
             
@@ -151,26 +195,14 @@ def render():
                     "graduation_date": completion_date
                 })
             
-            # 5. Technical Skills
-            st.markdown("### 5. Technical Skills")
-            tech_skills = st.text_input("Technical Skills (comma-separated)",
-                                       value=", ".join(sj.get("technical_skills", []) or []),
-                                       help="e.g., Python, Java, SQL, Machine Learning")
-            
-            # 6. Soft Skills
-            st.markdown("### 6. Soft Skills")
-            soft_skills = st.text_input("Soft Skills (comma-separated)",
-                                       value=", ".join(sj.get("soft_skills", []) or []),
-                                       help="e.g., Leadership, Communication, Problem Solving")
-            
-            # 7. Certifications
-            st.markdown("### 7. Certifications")
+            # 12. Certifications
+            st.markdown("### 12. Certifications")
             certifications = st.text_input("Certifications (comma-separated)",
                                           value=", ".join(sj.get("certifications", []) or []),
                                           help="e.g., AWS Certified, PMP, Scrum Master")
             
-            # 8. Total Years of Experience (editable)
-            st.markdown("### 8. Total Years of Experience")
+            # 13. Total Years of Experience (editable)
+            st.markdown("### 13. Total Years of Experience")
             col1, col2 = st.columns(2)
             
             # Calculate experience from work history
@@ -237,6 +269,11 @@ def render():
             sj["technical_skills"] = [s.strip() for s in tech_skills.split(",") if s.strip()]
             sj["soft_skills"] = [s.strip() for s in soft_skills.split(",") if s.strip()]
             sj["certifications"] = [s.strip() for s in certifications.split(",") if s.strip()]
+            sj["key_achievements"] = [s.strip() for s in key_achievements.split("\n") if s.strip()]
+            sj["projects"] = [s.strip() for s in projects.split("\n") if s.strip()]
+            sj["career_level"] = career_level
+            sj["industry_focus"] = industry_focus
+            sj["location"] = location
             sj["total_years_experience"] = total_experience
             
             sj = backfill_from_text(st.session_state.get("cleaned_text",""), sj)

@@ -39,7 +39,14 @@ def get_training_dataframe() -> pd.DataFrame:
     return st.session_state.get("training_df", pd.DataFrame())
 
 def get_resume_text() -> str:
-    """Get cleaned resume text from session state"""
+    """Get optimized resume text from session state for course recommendations"""
+    # First try to get structured data and create optimized text
+    structured_json = st.session_state.get("structured_json", {})
+    if structured_json:
+        from utils.resume_processor import create_optimized_resume_text
+        return create_optimized_resume_text(structured_json)
+    
+    # Fallback to cleaned text if structured data not available
     return st.session_state.get('cleaned_text', '')
 
 def get_candidate_skills() -> list:

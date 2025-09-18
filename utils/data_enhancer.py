@@ -1,7 +1,7 @@
 
-# FILE: processing/data_enhancer.py
+# FILE: utils/data_enhancer.py
 # Purpose: Robust post-parse fixes from cleaned text:
-# - Extract name/email/phone/location from header
+# - Extract location from header
 # - Normalize date ranges (map 'till date' etc. -> 'Present'; unify dashes)
 # - Derive most recent work experience (title/company/start/end)
 # - Mark education entries with future graduation dates as in-progress
@@ -9,8 +9,6 @@ from __future__ import annotations
 import re, datetime as dt
 from typing import Dict, Any, List, Tuple
 
-EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
-PHONE_RE = re.compile(r"(?:\+\d{1,3}[\s.-]?)?(?:\d[\s.-]?){9,13}")
 CITY_HINTS = ["Bengaluru","Bangalore","Kolkata","Mumbai","Delhi","Hyderabad","Chennai","Pune","India"]
 
 MONTHS = {
@@ -29,44 +27,29 @@ def _clean_text(text: str) -> str:
     t = re.sub(r"(?i)till\s*-?\s*date|till\s*-?\s*now|to\s*-?\s*date|current|ongoing", "Present", t)
     return t
 
-def _infer_name_from_email(email: str) -> str:
-    # e.g., "john.doe_87@company.com" -> "John Doe"
-    if not email: return ""
-    local = email.split("@")[0]
-    parts = re.split(r"[._\-\d]+", local)
-    parts = [p for p in parts if p]
-    if 1 <= len(parts) <= 3:
-        return " ".join(w.capitalize() for w in parts)
-    return ""
-
-def extract_personal_info(text: str, existing: Dict[str, Any] | None = None) -> Dict[str, str]:
+def extract_location_info(text: str, existing: str | None = None) -> str:
+    """Extract location information from resume text"""
     t = _clean_text(text or "")
     lines = [ln.strip() for ln in t.splitlines()]
-    email_m = EMAIL_RE.search(t)
-    phone_m = PHONE_RE.search(t)
-    email = email_m.group(0) if email_m else ""
-    phone = phone_m.group(0) if phone_m else ""
-    # name: first non-empty, non-label header; else infer from email
-    name = ""
-    header_candidates = lines[:8]
-    for ln in header_candidates:
-        if EMAIL_RE.search(ln) or PHONE_RE.search(ln):
-            continue
-        low = ln.lower()
-        if any(k in low for k in ["resume","curriculum vitae","cv","profile","summary","contact","email","phone"]):
-            continue
-        if 2 <= len(ln.split()) <= 6 and len(ln) <= 60:
-            name = ln.strip(":-|, ")
-            break
-    if not name:
-        name = _infer_name_from_email(email)
-    # location
-    location = ""
-    for ln in header_candidates + lines[8:20]:
-        if any(city.lower() in ln.lower() for city in CITY_HINTS):
-            location = ln
-            break
-    return {"name": name, "email": email, "phone": phone, "location": location}
+    
+    # If location already exists, return it
+    if existing and existing.strip():
+        return existing.strip()
+    
+    # Look for location patterns in the first few lines
+    location_keywords = [
+        r'\b(?:based|located|residing|living)\s+(?:in|at)\s+([^,\n]+(?:,\s*[^,\n]+)*)',
+        r'\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*),\s*([A-Z]{2}|[A-Z][a-z]+)(?:,\s*([A-Z][a-z]+))?\b',
+        r'\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*),\s*([A-Z][a-z]+)\b'
+    ]
+    
+    for line in lines[:10]:  # Check first 10 lines
+        for pattern in location_keywords:
+            match = re.search(pattern, line)
+            if match:
+                return match.group(0).strip()
+    
+    return ""
 
 def _parse_month_year(s: str) -> Tuple[int,int] | None:
     s = s.strip()
@@ -134,13 +117,12 @@ def normalize_education_in_progress(struct: Dict[str, Any]) -> Dict[str, Any]:
 
 def backfill_from_text(cleaned_text: str, structured_json: Dict[str, Any]) -> Dict[str, Any]:
     sj = (structured_json or {}).copy()
-    # 1) personal info
-    pi = sj.get("personal_info", {}) or {}
-    inferred = extract_personal_info(cleaned_text, pi)
-    for k in ["name","email","phone","location"]:
-        if not (pi.get(k) or "").strip() and inferred.get(k):
-            pi[k] = inferred[k]
-    sj["personal_info"] = pi
+    
+    # 1) location info
+    current_location = sj.get("location", "")
+    inferred_location = extract_location_info(cleaned_text, current_location)
+    if inferred_location and not current_location.strip():
+        sj["location"] = inferred_location
 
     # 2) experience (first/most recent)
     wx = sj.get("work_experience", []) or []

@@ -79,22 +79,22 @@ def extract_structured_resume_data(resume_text: str) -> Dict[str, Any]:
     
     # Define the expected schema
     schema = {
-        "personal_info": {"name": "", "email": "", "phone": "", "location": ""},
         "professional_summary": "",
         "current_role": {"role": "", "company": ""},
+        "technical_skills": [""],
+        "career_level": "",
+        "industry_focus": "",
         "work_experience": [
             {"title": "", "company": "", "start_date": "", "end_date": "", "responsibilities": ""}
         ],
+        "key_achievements": [""],
+        "soft_skills": [""],
+        "location": "",
+        "projects": [""],
         "education": [
             {"degree": "", "institution": "", "graduation_date": ""}
         ],
-        "technical_skills": [""],
-        "soft_skills": [""],
         "certifications": [""],
-        "key_achievements": [""],
-        "projects": [""],
-        "career_level": "",
-        "industry_focus": "",
     }
     
     prompt = f"""
@@ -103,6 +103,8 @@ def extract_structured_resume_data(resume_text: str) -> Dict[str, Any]:
     
     {json.dumps(schema, indent=2)}
     
+    IMPORTANT: Do NOT extract personal identifying information like name, email, or phone number.
+    Only extract location (country, state, city if available).
     Use empty strings/lists if information is unknown. No commentary outside JSON.
     
     Resume text:
@@ -140,28 +142,22 @@ def normalize_structured_data(data: Dict[str, Any]) -> Dict[str, Any]:
         return s
     
     normalized = {
-        "personal_info": {"name": "", "email": "", "phone": "", "location": ""},
         "professional_summary": "",
         "current_role": {"role": "", "company": ""},
-        "work_experience": [],
-        "education": [],
         "technical_skills": [],
-        "soft_skills": [],
-        "certifications": [],
-        "projects": [],
         "career_level": data.get("career_level", ""),
         "industry_focus": data.get("industry_focus", ""),
+        "work_experience": [],
+        "key_achievements": [],
+        "soft_skills": [],
+        "location": "",
+        "projects": [],
+        "education": [],
+        "certifications": [],
     }
     
-    # Normalize personal info
-    pi = data.get("personal_info", {})
-    if isinstance(pi, dict):
-        normalized["personal_info"].update({
-            "name": pi.get("name", ""),
-            "email": pi.get("email", ""),
-            "phone": pi.get("phone", ""),
-            "location": pi.get("location", ""),
-        })
+    # Normalize location
+    normalized["location"] = data.get("location", "")
     
     # Normalize professional summary
     normalized["professional_summary"] = data.get("professional_summary", "") or data.get("summary", "")
@@ -196,6 +192,7 @@ def normalize_structured_data(data: Dict[str, Any]) -> Dict[str, Any]:
     normalized["technical_skills"] = [s for s in _list(data.get("technical_skills")) if s]
     normalized["soft_skills"] = [s for s in _list(data.get("soft_skills")) if s]
     normalized["certifications"] = [s for s in _list(data.get("certifications")) if s]
+    normalized["key_achievements"] = [s for s in _list(data.get("key_achievements")) if s]
     normalized["projects"] = [s for s in _list(data.get("projects")) if s]
     
     return normalized
@@ -204,13 +201,9 @@ def validate_resume_data(structured_data: Dict[str, Any]) -> List[str]:
     """Validate resume data and return list of issues"""
     issues = []
     
-    personal_info = structured_data.get("personal_info", {})
-    if not personal_info.get("name"):
-        issues.append("Missing name")
-    if not personal_info.get("email"):
-        issues.append("Missing email")
-    if not personal_info.get("phone"):
-        issues.append("Missing phone number")
+    location = structured_data.get("location", "")
+    if not location:
+        issues.append("Missing location information")
     
     if not structured_data.get("technical_skills"):
         issues.append("No technical skills found")
@@ -253,6 +246,93 @@ def create_career_profile(structured_data: Dict[str, Any]) -> str:
             profile_points.append(f"Education: {latest_edu['degree']}")
     
     return "• " + "\n• ".join(profile_points) if profile_points else "Career profile information not available"
+
+def create_optimized_resume_text(structured_data: Dict[str, Any]) -> str:
+    """Create resume text with strategic ordering for course recommendations"""
+    
+    text_parts = []
+    
+    # 1. Professional Summary
+    summary = structured_data.get("professional_summary", "").strip()
+    if summary:
+        text_parts.append(f"PROFESSIONAL SUMMARY: {summary}")
+    
+    # 2. Current Role
+    current_role = structured_data.get("current_role", {})
+    if current_role.get("role") or current_role.get("company"):
+        role_text = f"CURRENT ROLE: {current_role.get('role', '')} at {current_role.get('company', '')}".strip()
+        text_parts.append(role_text)
+    
+    # 3. Technical Skills
+    tech_skills = structured_data.get("technical_skills", [])
+    if tech_skills:
+        skills_text = ", ".join(tech_skills)
+        text_parts.append(f"TECHNICAL SKILLS: {skills_text}")
+    
+    # 4. Career Level
+    career_level = structured_data.get("career_level", "").strip()
+    if career_level:
+        text_parts.append(f"CAREER LEVEL: {career_level}")
+    
+    # 5. Industry Focus
+    industry_focus = structured_data.get("industry_focus", "").strip()
+    if industry_focus:
+        text_parts.append(f"INDUSTRY FOCUS: {industry_focus}")
+    
+    # 6. Work Experience (condensed)
+    work_exp = structured_data.get("work_experience", [])
+    if work_exp:
+        exp_parts = []
+        for exp in work_exp[:3]:  # Top 3 most recent
+            title = exp.get("title", "")
+            company = exp.get("company", "")
+            if title or company:
+                exp_parts.append(f"{title} at {company}".strip())
+        if exp_parts:
+            text_parts.append(f"WORK EXPERIENCE: {'; '.join(exp_parts)}")
+    
+    # 7. Key Achievements
+    achievements = structured_data.get("key_achievements", [])
+    if achievements:
+        achievements_text = "; ".join(achievements[:3])  # Top 3 achievements
+        text_parts.append(f"KEY ACHIEVEMENTS: {achievements_text}")
+    
+    # 8. Soft Skills
+    soft_skills = structured_data.get("soft_skills", [])
+    if soft_skills:
+        soft_skills_text = ", ".join(soft_skills)
+        text_parts.append(f"SOFT SKILLS: {soft_skills_text}")
+    
+    # 9. Location
+    location = structured_data.get("location", "").strip()
+    if location:
+        text_parts.append(f"LOCATION: {location}")
+    
+    # 10. Projects
+    projects = structured_data.get("projects", [])
+    if projects:
+        projects_text = "; ".join(projects[:2])  # Top 2 projects
+        text_parts.append(f"PROJECTS: {projects_text}")
+    
+    # 11. Education (condensed)
+    education = structured_data.get("education", [])
+    if education:
+        edu_parts = []
+        for edu in education[:2]:  # Top 2 degrees
+            degree = edu.get("degree", "")
+            institution = edu.get("institution", "")
+            if degree or institution:
+                edu_parts.append(f"{degree} from {institution}".strip())
+        if edu_parts:
+            text_parts.append(f"EDUCATION: {'; '.join(edu_parts)}")
+    
+    # 12. Certifications
+    certifications = structured_data.get("certifications", [])
+    if certifications:
+        certs_text = ", ".join(certifications)
+        text_parts.append(f"CERTIFICATIONS: {certs_text}")
+    
+    return " | ".join(text_parts)
 
 def process_resume(file_path: str) -> Dict[str, Any]:
     """Main function to process resume from file to structured data"""
