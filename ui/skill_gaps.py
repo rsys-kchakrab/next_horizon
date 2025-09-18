@@ -1,10 +1,8 @@
 
-# FILE: ui/tabs/skill_gaps.py
+# FILE: ui/skill_gaps.py
 from __future__ import annotations
 import streamlit as st
 import pandas as pd
-from agents.clarifier_agent import ClarifierAgent
-from utils.compute_metrics import parse_quality, clarify_improvement
 from utils.skill_extraction import (
     extract_skills_from_jd_text, 
     extract_skills_from_aspirations, 
@@ -17,6 +15,10 @@ from utils.session_validators import (
     get_candidate_skills,
     get_current_role,
     get_user_aspirations
+)
+from utils.skill_clarification import (
+    generate_clarification_questions,
+    incorporate_clarification_answers
 )
 
 def render():
@@ -83,10 +85,14 @@ def render():
         st.markdown("---")
         st.markdown("### 🤔 Clarification Questions")
         
-        clarifier = ClarifierAgent(min_required_skill_coverage=0.5)
-        
         # Generate questions based on the skill gaps
-        questions = clarifier.generate_questions(st.session_state.structured_json, gaps[:10])  # Limit to top 10 gaps
+        questions = generate_clarification_questions(st.session_state.structured_json, gaps[:10])  # Limit to top 10 gaps
+        
+        # Debug information
+        with st.expander("🔍 Debug Info", expanded=False):
+            st.write(f"Number of skill gaps: {len(gaps)}")
+            st.write(f"Current technical skills: {len(st.session_state.structured_json.get('technical_skills', []))}")
+            st.write(f"Questions generated: {len(questions)}")
         
         if questions:
             with st.form("clarify_skill_gaps"):
@@ -101,14 +107,10 @@ def render():
                 submitted = st.form_submit_button("✅ Apply Answers")
                 
             if submitted:
-                before_missing = parse_quality(st.session_state.structured_json)[1].get("missing", [])
-                new_json = clarifier.incorporate_answers({k:v for k,v in answers.items() if v}, st.session_state.structured_json)
+                # Apply the clarification answers
+                new_json = incorporate_clarification_answers({k:v for k,v in answers.items() if v}, st.session_state.structured_json)
                 st.session_state.structured_json = new_json
-                after_missing = parse_quality(new_json)[1].get("missing", [])
-                sc_improve, det = clarify_improvement(before_missing, after_missing)
                 st.success("Applied clarification answers successfully!")
-                if det.get("fixed"): 
-                    st.caption("Fixed: " + ", ".join(det["fixed"]))
                 
                 # Recalculate skill gaps with updated information
                 updated_candidate_skills = new_json.get("technical_skills", [])

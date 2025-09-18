@@ -1,10 +1,9 @@
 
-# FILE: ui/tabs/course_recommendations.py
+# FILE: ui/course_recommendations.py
 from __future__ import annotations
 import streamlit as st
 import pandas as pd
 from typing import Dict, List, Any
-from utils.ml_inference import recommend_courses_by_model, recommend_courses_from_training_dataset
 from utils.skill_extraction import get_required_skills_for_role, calculate_skill_gaps
 from utils.session_validators import (
     validate_skill_gaps_completed, 
@@ -142,69 +141,12 @@ def render():
     training_df = get_training_dataframe()
     has_training_dataset = not training_df.empty
     
-    # Check for trained model
-    has_trained_model = st.session_state.get("training_model") is not None
-    
-    # Define the two main options
-    mode_options = ["Trained Model", "Vector Search"]
-    
-    # Set default mode based on available resources
-    if has_trained_model:
-        default_mode = 0  # Trained Model
-    else:
-        default_mode = 1  # Vector Search
-    
-    mode = st.radio("Source", mode_options, index=default_mode)
-
-    if mode == "Trained Model":
-        if has_trained_model and has_training_dataset:
-            st.markdown("### 🎯 Trained Model Recommendations")
-            st.caption("Uses your trained model to classify and recommend courses from the training database.")
-            
-            with st.spinner("Using trained model to find courses from training database..."):
-                # Use the trained model to recommend from training database
-                recs = recommend_courses_by_model(gaps, training_df, st.session_state.training_model,
-                                                text_col="description", title_col="title", 
-                                                provider_col="provider", link_col="link")
-            
-            if recs:
-                for gap, courses in recs.items():
-                    if courses:
-                        st.markdown(f"### {gap} ({len(courses)} courses)")
-                        
-                        for course in courses:
-                            title = course.get('title', 'Unknown Course')
-                            provider = course.get('provider', 'Unknown')
-                            link = course.get('link', '')
-                            match_percent = course.get('match_percent', 0)
-                            
-                            # Create course display
-                            col1, col2 = st.columns([3, 1])
-                            
-                            with col1:
-                                if link:
-                                    st.markdown(f"🎯 [{title}]({link}) - **{provider}**")
-                                else:
-                                    st.markdown(f"🎯 {title} - **{provider}**")
-                            
-                            with col2:
-                                st.caption(f"🎯 {match_percent}% Model Match")
-                            
-                            st.divider()
-            else:
-                st.info("No course recommendations found in the training database for these skills.")
-                
-        else:
-            st.warning("⚠️ **Both trained model and training database are required.**")
-            st.info("1. Upload training_database.csv in the left panel (sidebar)")
-            st.info("2. Train a model in the Developer section (left panel)")
-    
-    elif mode == "Vector Search":
-        if has_training_dataset:
-            if st.button("🚀 Find Courses", key="btn_openai_training"):
-                with st.spinner("Using vector search to find the best courses from training database..."):
-                    resume_text = get_resume_text()
-                    recs = openai_rank_training_courses(gaps, resume_text, training_df, top_k=5)
+    # Use Vector Search for course recommendations
+    if has_training_dataset:
+        if st.button("🚀 Find Courses", key="btn_openai_training"):
+            with st.spinner("Using vector search to find the best courses from training database..."):
+                resume_text = get_resume_text()
+                recs = openai_rank_training_courses(gaps, resume_text, training_df, top_k=5)
                     
                 if recs:
                     for gap, courses in recs.items():
@@ -238,11 +180,11 @@ def render():
                                 with col3:
                                     if rating:
                                         st.caption(f"⭐ {rating}")
-                                    st.caption(f"🧠 {match_percent}% AI Match")
+                                    st.caption(f"🧠 {match_percent}% Vector Match")
                                 
                                 st.divider()
                 else:
                     st.info("No courses found in the training database for the identified skill gaps.")
-        else:
-            st.warning("⚠️ **No training database available.**")
-            st.info("Please upload training_database.csv in the left panel (sidebar) to use vector search recommendations.")
+    else:
+        st.warning("⚠️ **No training database available.**")
+        st.info("Please upload training_database.csv in the left panel (sidebar) to use vector search recommendations.")

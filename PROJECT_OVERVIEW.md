@@ -1,193 +1,225 @@
-# NextHorizon - Your Personalized Career Guide
+# NextHorizon - AI-Powered Career Development Platform
 
 ## Overview
-NextHorizon is a comprehensive AI-powered career guidance platform that helps professionals identify skill gaps, discover relevant roles, and get personalized course recommendations. Built with a clean, modular architecture using Streamlit and OpenAI's GPT-4o-mini model.
+NextHorizon is a streamlined AI-powered career guidance platform that helps professionals identify skill gaps, discover relevant roles, and get personalized course recommendations. Built with a clean, simplified architecture using Streamlit and OpenAI's latest models for maximum reliability and performance.
 
 ## Project Structure
 
 ```
 nexthorizon/
-├── .gitignore                      # Git ignore rules
 ├── app.py                          # 🚀 MAIN APPLICATION ENTRY POINT
 ├── config/
-│   ├── __init__.py                 # Session and configuration management
-│   └── session_config.py           # Streamlit session state initialization
-├── ui/
-│   ├── __init__.py                 # User interface components
-│   ├── sidebar.py                  # Database upload sidebar
-│   └── tabs/
-│       ├── __init__.py             
-│       ├── resume_parsing.py       # Resume upload & extraction
-│       ├── role_recommendations.py # AI-powered role matching
-│       ├── skill_gaps.py           # Skill gap analysis & recommendations
-│       └── course_recommendations.py # Personalized course suggestions
-├── agents/
-│   ├── __init__.py                 # AI agents for enhanced functionality
-│   └── clarifier_agent.py          # Interactive question generation
-├── processing/
-│   ├── __init__.py                 # Data processing and enhancement
-│   └── data_enhancer.py            # Resume data enhancement and completion
-├── engines/
-│   └── __init__.py                 # Future recommendation engines
+│   ├── __init__.py                 
+│   └── session_config.py           # Streamlit session state management
 ├── ai/
-│   ├── __init__.py                 # AI integration layer
-│   └── openai_client.py            # GPT-4o-mini API integration
-├── utils/
-│   ├── __init__.py                 # Core utility functions
-│   ├── compute_metrics.py          # Quality metrics and scoring
-│   ├── evaluation_metrics.py       # Analytics and performance tracking
-│   ├── util_models.py              # Data models and structures
-│   └── resume_text_builder.py      # Resume text construction
-├── security/
-│   ├── __init__.py                 # Security and validation
-│   └── guardrails.py               # Input validation and safety checks
-├── build_jd_dataset/              # Job description database tools
-│   ├── build_jd_database_v4.py     # JD database builder
-│   ├── jd_database.csv             # Job descriptions dataset
-│   └── role_list.csv               # Available roles list
-├── build_training_dataset/        # Training dataset creation tools
-│   ├── build_training_database.py  # Training data builder
-│   ├── skill_list.csv              # Skills dataset
-│   └── training_database.csv       # Training dataset
-├── resume_processing_crew.py      # Advanced resume processing pipeline
-├── ml_training.py                 # Machine learning model training
-└── PROJECT_OVERVIEW.md            # 📋 This documentation file
+│   ├── __init__.py                 
+│   └── openai_client.py            # OpenAI API integration (GPT-4o-mini + embeddings)
+├── ui/                             # 🎨 STREAMLIT UI COMPONENTS (Flattened Structure)
+│   ├── __init__.py                 
+│   ├── course_recommendations.py   # Course recommendation interface
+│   ├── resume_parsing.py           # Resume upload & parsing interface
+│   ├── role_recommendations.py     # Role recommendation interface
+│   ├── sidebar.py                  # Database upload sidebar
+│   └── skill_gaps.py               # Skill gap analysis interface
+├── utils/                          # 🛠️ CORE UTILITY FUNCTIONS
+│   ├── __init__.py                 
+│   ├── data_enhancer.py            # Resume data enhancement and cleanup
+│   ├── resume_processor.py         # Resume processing pipeline
+│   ├── resume_text_builder.py      # Resume text construction
+│   ├── session_validators.py       # Session state validation
+│   ├── skill_clarification.py      # Skill clarification workflow
+│   └── skill_extraction.py         # Skill extraction and gap analysis
+├── build_jd_dataset/              # 📊 JOB DESCRIPTION DATABASE
+│   ├── build_jd_database_v4.py     # Database builder script
+│   ├── jd_database.csv             # 400+ curated job descriptions
+│   └── role_list.csv               # Available career roles
+├── build_training_dataset/        # 📚 TRAINING DATA UTILITIES
+│   ├── build_training_database.py  # Training dataset builder
+│   ├── skill_list.csv              # Comprehensive skills database
+│   └── training_database.csv       # Training dataset for courses
+└── PROJECT_OVERVIEW.md            # 📋 This documentation
 ```
 
 ## Core Features
 
 ### 🎯 Resume Analysis & Parsing
-- **Smart PDF/TXT Upload**: Seamless resume document processing
-- **Intelligent Text Extraction**: Automated parsing of resume content
-- **Skills Identification**: AI-powered skill extraction and categorization
+- **Multi-Format Upload**: Seamless PDF and TXT resume processing
+- **AI-Powered Extraction**: OpenAI-based intelligent content parsing
+- **Skills Identification**: Automated skill extraction and categorization
 - **Experience Calculation**: Automatic total years of experience computation
-- **Data Enhancement**: Missing information completion and validation
+- **Data Enhancement**: Missing information completion using AI analysis
 
-### 🔍 Career Role Recommendations
-- **AI-Powered Matching**: GPT-4o-mini model analyzes skills vs job requirements
-- **Comprehensive Job Database**: 400+ curated job descriptions across industries
-- **Similarity Scoring**: Advanced matching algorithms with percentage compatibility
-- **Role Insights**: Detailed job descriptions with required skills and qualifications
-- **Personalized Suggestions**: Tailored recommendations based on individual profile
+### 🔍 Role Recommendations
+- **Vector Search Matching**: OpenAI embeddings (text-embedding-3-small) for precise role matching
+- **Comprehensive Database**: 400+ curated job descriptions across industries
+- **Similarity Scoring**: Advanced semantic matching with percentage compatibility
+- **Detailed Insights**: Complete job descriptions with requirements and qualifications
+- **Personalized Results**: AI-driven recommendations based on individual profile
 
 ### 📊 Skill Gap Analysis
-- **Gap Identification**: Precise analysis of missing skills for target roles
-- **Priority Ranking**: Skills ranked by importance and market demand
-- **Learning Pathways**: Clear roadmap for skill development
-- **Progress Tracking**: Monitor skill acquisition over time
-- **Industry Alignment**: Skills aligned with current market trends
+- **Intelligent Gap Detection**: AI-powered analysis of missing skills for target roles
+- **Priority Ranking**: Skills ranked by importance for career advancement
+- **Clear Learning Paths**: Structured roadmap for skill development
+- **Interactive Clarification**: Dynamic Q&A to refine skill assessments
+- **Market Alignment**: Skills aligned with current industry demands
 
 ### 📚 Course Recommendations
-- **Intelligent Course Matching**: AI-driven course selection based on skill gaps
-- **Multi-Platform Integration**: Courses from various learning platforms
-- **Personalized Learning Paths**: Customized curriculum based on career goals
-- **Quality Scoring**: Course recommendations with relevance ratings
-- **Learning Optimization**: Efficient skill development strategies
+- **AI-Driven Selection**: GPT-4o-mini powered course matching based on skill gaps
+- **Curated Learning Content**: High-quality courses from established platforms
+- **Personalized Pathways**: Custom learning sequences for career goals
+- **Relevance Scoring**: AI-evaluated course recommendations with confidence ratings
+- **Efficient Learning**: Optimized skill development strategies
 
 ## Technical Architecture
 
-### 🤖 AI Integration
-- **GPT-4o-mini Model**: Latest OpenAI model for enhanced accuracy and transparency
-- **TF-IDF Fallback**: Robust backup system for consistent performance
-- **Smart Ranking**: Advanced algorithms for role and course recommendations
-- **Natural Language Processing**: Sophisticated text analysis and understanding
+### 🤖 AI-First Design
+- **OpenAI Integration**: GPT-4o-mini for text generation and analysis
+- **Vector Embeddings**: text-embedding-3-small for semantic similarity matching
+- **No ML Dependencies**: Eliminated complex trained models in favor of reliable APIs
+- **Real-time Processing**: Fast, consistent AI-powered recommendations
 
-### 🔧 Data Processing Pipeline
-- **Multi-format Support**: PDF, TXT, and direct text input processing
-- **Data Validation**: Comprehensive input validation and error handling
-- **Quality Metrics**: Automated scoring and quality assessment
-- **Performance Analytics**: Real-time performance tracking and optimization
+### 🔧 Simplified Data Flow
+- **Linear Workflow**: Upload → Parse → Select Role → Find Gaps → Get Courses
+- **Session Management**: Clean Streamlit session state handling
+- **Utility-Based**: Simple functions instead of complex class hierarchies
+- **Error Resilience**: Graceful error handling throughout the pipeline
 
-### 🛡️ Security & Reliability
-- **Input Validation**: Robust security checks and data sanitization
-- **Error Handling**: Graceful error management and user feedback
-- **Session Management**: Secure session state and data persistence
-- **Privacy Protection**: Safe handling of personal and professional data
+### 🛡️ Clean Architecture
+- **Minimal Dependencies**: Streamlit, OpenAI, Pandas - core libraries only
+- **Modular Design**: Independent components with clear responsibilities
+- **Maintainable Code**: Straightforward functions and logical organization
+- **Production Ready**: Simplified structure suitable for deployment
 
 ## Quick Start Guide
 
+### Prerequisites
+- Python 3.8+
+- OpenAI API key
+
 ### Installation & Setup
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd nexthorizon
+# Install dependencies
+pip install streamlit openai pandas numpy
 
-# Install dependencies (create requirements.txt if needed)
-pip install streamlit openai pandas numpy scikit-learn
+# Set OpenAI API key (Windows PowerShell)
+$env:OPENAI_API_KEY = "your-api-key-here"
 
 # Run the application
 streamlit run app.py
 ```
 
-### Application Usage
-1. **Upload Resume**: Use the sidebar to upload PDF/TXT resume files
-2. **Parse Resume**: Extract skills, experience, and professional information
-3. **Get Role Recommendations**: AI analyzes your profile for matching career opportunities
-4. **Identify Skill Gaps**: Discover missing skills for your target roles
-5. **Find Courses**: Get personalized course recommendations to bridge skill gaps
+### Usage Workflow
+1. **Database Setup**: Upload JD database (jd_database.csv) via sidebar
+2. **Resume Upload**: Upload PDF/TXT resume or paste text directly
+3. **Parse Resume**: AI extracts skills, experience, and key information
+4. **Select Role**: Choose target role from AI-recommended options
+5. **Analyze Gaps**: View missing skills with clarification questions
+6. **Get Courses**: Receive personalized course recommendations
 
 ## Development Guidelines
 
-### 🏗️ Modular Architecture
-- **Separation of Concerns**: Clean boundaries between UI, AI, processing, and utilities
-- **Scalable Design**: Easy to extend and modify individual components
-- **Python Best Practices**: Proper package structure with `__init__.py` files
-- **Import Clarity**: Logical import paths that reflect functionality
+### 🏗️ Simplified Architecture Principles
+- **Utility-First**: Simple functions over complex class hierarchies
+- **OpenAI-Powered**: Leverage API capabilities instead of maintaining ML models
+- **Clean Separation**: UI components in `ui/`, core logic in `utils/`
+- **Session-Based**: Streamlit session state for user data persistence
+- **Error-Resilient**: Graceful handling of API failures and edge cases
 
-### 📝 Code Standards
-- **Type Hints**: Enhanced code documentation and IDE support
-- **Error Handling**: Comprehensive error management throughout the application
-- **Documentation**: Clear docstrings and inline comments
-- **Consistent Naming**: Descriptive variable and function names
-
-### 🔄 Import Examples
+### � Code Organization
 ```python
-# Main application components
+# Main application flow
 from config.session_config import initialize_session_state
-from ui.sidebar import render_sidebar  
-from ai.openai_client import openai_rank_roles
-from utils.compute_metrics import parse_quality
-from security.guardrails import validate_input
-from agents.clarifier_agent import ClarifierAgent
-from processing.data_enhancer import backfill_from_text
+from ui.sidebar import render_sidebar
+from ui.resume_parsing import render_resume_parsing
+from ui.role_recommendations import render_role_recommendations
+from ui.skill_gaps import render_skill_gaps
+from ui.course_recommendations import render_course_recommendations
+
+# Core utilities
+from utils.resume_processor import process_resume
+from utils.skill_extraction import extract_skills_from_jd_text, calculate_skill_gaps
+from utils.skill_clarification import generate_clarification_questions
+from utils.session_validators import validate_role_selected
+from utils.data_enhancer import backfill_from_text
+
+# AI integration
+from ai.openai_client import (
+    openai_rank_roles,
+    openai_recommend_courses,
+    openai_parse_resume
+)
 ```
 
 ## Key Benefits
 
 ### 🚀 Production Ready
-- **Professional Architecture**: Enterprise-level code organization
-- **Maintainable Codebase**: Easy to understand, modify, and extend
-- **Scalable Foundation**: Ready for team development and feature expansion
-- **Clean Dependencies**: Minimal external dependencies with clear purposes
+- **Simplified Architecture**: Clean, maintainable code structure
+- **API-First Approach**: Reliable OpenAI integration without local ML complexity
+- **Minimal Dependencies**: Core libraries only for reduced deployment overhead
+- **Fast Performance**: Vector search and AI APIs for responsive user experience
 
 ### 👥 Developer Experience
-- **Fast Navigation**: Logical file locations make finding code effortless
-- **IDE Support**: Proper package structure enables full autocomplete and navigation
-- **Easier Debugging**: Modular design isolates issues to specific components
-- **Quick Onboarding**: Self-documenting structure for new developers
+- **Intuitive Structure**: Logical file organization with clear purpose
+- **Easy Navigation**: Flattened UI structure and centralized utilities
+- **Quick Setup**: Minimal configuration required to get started
+- **Clear Responsibilities**: Each module has a single, well-defined purpose
 
 ### 🎯 User Experience
-- **Fast Performance**: Optimized code structure and efficient algorithms
-- **Reliable Results**: Robust error handling and fallback mechanisms
-- **Intuitive Interface**: Clean, focused UI with clear navigation
-- **Consistent Behavior**: Predictable responses and smooth user flow
+- **Streamlined Workflow**: Linear progression from resume to recommendations
+- **Intelligent Interactions**: AI-powered clarification questions for better accuracy
+- **Real-time Results**: Fast AI processing with immediate feedback
+- **Professional Output**: Comprehensive career guidance and actionable insights
+
+## Architecture Highlights
+
+### 🔄 Data Flow
+```
+1. Resume Upload → utils/resume_processor.py
+2. AI Parsing → ai/openai_client.py (GPT-4o-mini)
+3. Role Matching → Vector embeddings + similarity search
+4. Skill Analysis → utils/skill_extraction.py
+5. Gap Identification → AI-powered comparison
+6. Course Recommendations → Training dataset + AI ranking
+```
+
+### 🗂️ File Responsibilities
+- **`app.py`**: Main Streamlit application with tab navigation
+- **`ui/`**: Individual UI components for each application step
+- **`utils/`**: Core processing functions and session management
+- **`ai/`**: OpenAI API integration and response handling
+- **`config/`**: Application configuration and session initialization
+- **`build_*_dataset/`**: Data preparation and database management
+
+### 🧹 Simplified Design
+- **Removed**: Complex agent frameworks, TF-IDF fallbacks, ML training pipelines
+- **Consolidated**: Duplicate functions, over-engineered abstractions
+- **Streamlined**: Directory structure, import paths, code organization
+- **Preserved**: Core functionality, data integrity, user experience
 
 ## Contributing
 
 ### 🛠️ Development Setup
-1. **Environment**: Python 3.8+ recommended
-2. **Dependencies**: Install via `pip install -r requirements.txt` (create as needed)
-3. **IDE**: VS Code with Python extension recommended
-4. **Git**: Follow conventional commit messages
+1. **Environment**: Python 3.8+ with virtual environment recommended
+2. **API Access**: OpenAI API key required for all AI features
+3. **Database**: Upload `jd_database.csv` through the application UI
+4. **Testing**: Manual testing through Streamlit interface
 
-### 📋 Future Enhancements
-- **Advanced ML Models**: Enhanced recommendation algorithms
-- **Multi-language Support**: Internationalization capabilities
-- **API Integration**: REST API for external system integration
-- **Mobile Responsiveness**: Enhanced mobile device support
-- **Real-time Updates**: Live skill gap monitoring and notifications
+### 📋 Extension Points
+- **New UI Components**: Add files to `ui/` directory with `render_*()` functions
+- **Additional Utilities**: Extend `utils/` with new processing functions
+- **Enhanced AI Features**: Modify `ai/openai_client.py` for new capabilities
+- **Database Integration**: Expand dataset builders for additional data sources
+
+### 🎯 Future Enhancements
+- **API Endpoints**: REST API layer for external integrations
+- **Database Backends**: PostgreSQL/MongoDB for production data storage
+- **Authentication**: User accounts and personalized recommendations
+- **Analytics**: Usage tracking and recommendation effectiveness metrics
+- **Mobile Support**: Responsive design for mobile devices
 
 ---
+
+*Built with ❤️ using Streamlit and OpenAI - Simplified for maintainability and performance*
 
 ## Summary
 

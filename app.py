@@ -15,10 +15,10 @@ os.environ.setdefault("OTEL_LOGS_EXPORTER", "none")
 # Import modules
 from config.session_config import initialize_session_state, check_environment
 from ui.sidebar import render_sidebar
-from ui.tabs.resume_parsing import render as tab1_render
-from ui.tabs.role_recommendations import render as tab2_render  
-from ui.tabs.skill_gaps import render as tab3_render
-from ui.tabs.course_recommendations import render as tab4_render
+from ui.resume_parsing import render as tab1_render
+from ui.role_recommendations import render as tab2_render  
+from ui.skill_gaps import render as tab3_render
+from ui.course_recommendations import render as tab4_render
 
 def main():
     """Main application entry point"""

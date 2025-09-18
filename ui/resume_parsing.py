@@ -1,17 +1,13 @@
 
-# FILE: ui/tabs/resume_parsing.py
+# FILE: ui/resume_parsing.py
 from __future__ import annotations
 import json
 from pathlib import Path
 import streamlit as st
-from resume_processing_crew import (
-    ResumeProcessingCrew, parse_structured_info, normalize_structured_json
-)
-from utils.compute_metrics import parse_quality
-from utils.evaluation_metrics import log_event
+from utils.resume_processor import process_resume
 
 try:
-    from processing.data_enhancer import backfill_from_text
+    from utils.data_enhancer import backfill_from_text
 except Exception:
     def backfill_from_text(cleaned_text, structured_json): return structured_json
 
@@ -30,17 +26,19 @@ def render():
         tmp = Path(".streamlit_tmp"); tmp.mkdir(exist_ok=True)
         p = tmp / up.name
         with open(p, "wb") as f: f.write(up.read())
-        crew = ResumeProcessingCrew()
+        
         with st.spinner("Processing resume…"):
-            out = crew.process_resume(str(p))
+            out = process_resume(str(p))
+        
+        if not out["success"]:
+            st.error(f"Failed to process resume: {out['validation_report']}")
+            return
+            
         st.session_state.cleaned_text = out.get("extracted_text","")
         st.session_state.validation_report = out.get("validation_report","")
-        raw_struct = out.get("structured_info","")
-        try:
-            struct = json.loads(raw_struct)
-        except Exception:
-            struct = parse_structured_info(raw_struct)
-        struct = normalize_structured_json(struct)
+        struct = out.get("final_result", {})
+        
+        # Apply any data enhancement
         struct = backfill_from_text(st.session_state.cleaned_text, struct)
         st.session_state.structured_json = struct
 
@@ -241,21 +239,10 @@ def render():
             sj["certifications"] = [s.strip() for s in certifications.split(",") if s.strip()]
             sj["total_years_experience"] = total_experience
             
-            sj = normalize_structured_json(sj)
             sj = backfill_from_text(st.session_state.get("cleaned_text",""), sj)
             st.session_state.structured_json = sj
             
             st.success("✅ All edits applied successfully! You can now proceed to other tabs.")
-            
-            # Log the edit event for analytics
-            log_event("anon", "edit", "applied_edits", 1.0, {"tech_count": len(sj.get("technical_skills", []))})
-            
-            # Display quality score
-            if st.session_state.get("cleaned_text"):
-                quality_score, quality_details = parse_quality(sj)
-                st.info(f"📊 Parse Quality Score: {quality_score:.1%}")
-                if quality_details.get("missing"):
-                    st.warning(f"Missing fields: {', '.join(quality_details['missing'])}")
     
     elif st.session_state.get("cleaned_text"):
         st.info("Resume uploaded but parsing failed. Please try uploading again or check the file format.")
