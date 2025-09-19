@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Dict, List
 import os
 import re
+import json
 import numpy as np
 
 def _cosine(a, b):
@@ -139,3 +140,61 @@ def openai_rank_courses(gaps, resume_text: str, snippets: List[Dict[str, Any]], 
             "match_percent": round(float(sc * 100.0), 1)
         })
     return out
+
+def openai_parse_resume(resume_text: str) -> Dict[str, Any]:
+    """Parse resume text into structured data using OpenAI"""
+    
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
+    
+    # Define the expected schema
+    schema = {
+        "professional_summary": "",
+        "current_role": {"role": "", "company": ""},
+        "technical_skills": [""],
+        "career_level": "",
+        "industry_focus": "",
+        "work_experience": [
+            {"title": "", "company": "", "start_date": "", "end_date": "", "responsibilities": ""}
+        ],
+        "key_achievements": [""],
+        "soft_skills": [""],
+        "location": "",
+        "projects": [""],
+        "education": [
+            {"degree": "", "institution": "", "graduation_date": ""}
+        ],
+        "certifications": [""],
+    }
+    
+    prompt = f"""
+    Analyze the following resume text and extract structured professional information.
+    Return ONLY valid JSON matching EXACTLY this schema (keys & nesting):
+    
+    {json.dumps(schema, indent=2)}
+    
+    IMPORTANT: Do NOT extract personal identifying information like name, email, or phone number.
+    Only extract location (country, state, city if available).
+    Use empty strings/lists if information is unknown. No commentary outside JSON.
+    
+    Resume text:
+    {resume_text}
+    """
+    
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            temperature=0.2
+        )
+        
+        structured_data = json.loads(response.choices[0].message.content)
+        return structured_data
+        
+    except Exception as e:
+        raise RuntimeError(f"Failed to extract structured data: {str(e)}")

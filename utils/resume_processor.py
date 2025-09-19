@@ -1,6 +1,5 @@
-# FILE: utils/resume_processor.py - Complete Resume Processing and Text Generation
+# FILE: utils/resume_processor.py - Resume Processing Pipeline (AI Provider Agnostic)
 from __future__ import annotations
-import os
 import json
 from typing import Dict, Any, List
 from pathlib import Path
@@ -71,60 +70,18 @@ def clean_resume_text(raw_text: str) -> str:
     return '\n'.join(cleaned_lines)
 
 def extract_structured_resume_data(resume_text: str) -> Dict[str, Any]:
-    """Extract structured data from resume text using OpenAI"""
-    
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
-    
-    # Define the expected schema
-    schema = {
-        "professional_summary": "",
-        "current_role": {"role": "", "company": ""},
-        "technical_skills": [""],
-        "career_level": "",
-        "industry_focus": "",
-        "work_experience": [
-            {"title": "", "company": "", "start_date": "", "end_date": "", "responsibilities": ""}
-        ],
-        "key_achievements": [""],
-        "soft_skills": [""],
-        "location": "",
-        "projects": [""],
-        "education": [
-            {"degree": "", "institution": "", "graduation_date": ""}
-        ],
-        "certifications": [""],
-    }
-    
-    prompt = f"""
-    Analyze the following resume text and extract structured professional information.
-    Return ONLY valid JSON matching EXACTLY this schema (keys & nesting):
-    
-    {json.dumps(schema, indent=2)}
-    
-    IMPORTANT: Do NOT extract personal identifying information like name, email, or phone number.
-    Only extract location (country, state, city if available).
-    Use empty strings/lists if information is unknown. No commentary outside JSON.
-    
-    Resume text:
-    {resume_text}
     """
+    Extract structured data from resume text using AI parsing (provider-agnostic).
+    
+    This function delegates to AI provider-specific implementations in the ai/ module.
+    Currently uses OpenAI, but can be easily swapped for other AI providers by
+    modifying the import and function call below.
+    """
+    from ai.openai_client import openai_parse_resume
     
     try:
-        from openai import OpenAI
-        client = OpenAI(api_key=api_key)
-        
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
-            response_format={"type": "json_object"},
-            temperature=0.2
-        )
-        
-        structured_data = json.loads(response.choices[0].message.content)
+        structured_data = openai_parse_resume(resume_text)
         return normalize_structured_data(structured_data)
-        
     except Exception as e:
         raise RuntimeError(f"Failed to extract structured data: {str(e)}")
 
