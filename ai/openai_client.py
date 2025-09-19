@@ -116,10 +116,7 @@ def openai_rank_courses(gaps, resume_text: str, snippets: List[Dict[str, Any]], 
         model = "text-embedding-3-small"
         emb_q = client.embeddings.create(model=model, input=bundle).data[0].embedding
         emb_docs = client.embeddings.create(model=model, input=docs).data
-        scores = [
-            float(np.dot(emb_q, d.embedding) / (np.linalg.norm(emb_q) * np.linalg.norm(d.embedding) + 1e-9))
-            for d in emb_docs
-        ]
+        scores = [_cosine(emb_q, d.embedding) for d in emb_docs]
     except Exception as e:
         raise RuntimeError(f"OpenAI API error: {str(e)}. Please check your API key and connection.")
 
