@@ -24,13 +24,12 @@ nexthorizon/
 ├── utils/                          # 🛠️ CORE UTILITY FUNCTIONS
 │   ├── __init__.py                 
 │   ├── data_enhancer.py            # Resume data enhancement and cleanup
-│   ├── resume_processor.py         # Resume processing pipeline
-│   ├── resume_text_builder.py      # Resume text construction
-│   ├── session_validators.py       # Session state validation
-│   ├── skill_clarification.py      # Skill clarification workflow
-│   └── skill_extraction.py         # Skill extraction and gap analysis
+│   ├── resume_processor.py         # Complete resume processing pipeline (includes text building)
+│   ├── session_helpers.py          # Session state management and validation
+│   ├── skill_analysis.py           # Skill extraction and gap analysis
+│   └── skill_clarification.py      # Skill clarification workflow
 ├── build_jd_dataset/              # 📊 JOB DESCRIPTION DATABASE
-│   ├── build_jd_database_v4.py     # Database builder script
+│   ├── build_jd_database.py        # Database builder script
 │   ├── jd_database.csv             # 400+ curated job descriptions
 │   └── role_list.csv               # Available career roles
 ├── build_training_dataset/        # 📚 TRAINING DATA UTILITIES
@@ -89,6 +88,7 @@ nexthorizon/
 - **Modular Design**: Independent components with clear responsibilities
 - **Maintainable Code**: Straightforward functions and logical organization
 - **Production Ready**: Simplified structure suitable for deployment
+- **Version-Free**: Clean codebase without development artifacts or version numbers
 
 ## Quick Start Guide
 
@@ -177,7 +177,7 @@ from ai.openai_client import (
 1. Resume Upload → utils/resume_processor.py
 2. AI Parsing → ai/openai_client.py (GPT-4o-mini)
 3. Role Matching → Vector embeddings + similarity search
-4. Skill Analysis → utils/skill_extraction.py
+4. Skill Analysis → utils/skill_analysis.py
 5. Gap Identification → AI-powered comparison
 6. Course Recommendations → Training dataset + AI ranking
 ```
@@ -185,16 +185,39 @@ from ai.openai_client import (
 ### 🗂️ File Responsibilities
 - **`app.py`**: Main Streamlit application with tab navigation
 - **`ui/`**: Individual UI components for each application step
-- **`utils/`**: Core processing functions and session management
+- **`utils/`**: Core processing functions and session management (optimized structure)
+  - `resume_processor.py`: Complete resume processing pipeline including text building
+  - `skill_analysis.py`: Skill extraction and gap analysis (renamed for clarity)
+  - `session_helpers.py`: Session state management and validation (renamed for clarity)
+  - `skill_clarification.py`: Interactive skill clarification workflow
+  - `data_enhancer.py`: Resume data enhancement and cleanup
 - **`ai/`**: OpenAI API integration and response handling
 - **`config/`**: Application configuration and session initialization
 - **`build_*_dataset/`**: Data preparation and database management
 
 ### 🧹 Simplified Design
-- **Removed**: Complex agent frameworks, TF-IDF fallbacks, ML training pipelines
-- **Consolidated**: Duplicate functions, over-engineered abstractions
-- **Streamlined**: Directory structure, import paths, code organization
+- **Removed**: Complex agent frameworks, TF-IDF fallbacks, ML training pipelines, version artifacts
+- **Consolidated**: Duplicate functions, over-engineered abstractions, redundant utilities
+- **Streamlined**: Directory structure, import paths, code organization, file naming
 - **Preserved**: Core functionality, data integrity, user experience
+- **Optimized**: Utils folder organization with semantic naming and function consolidation
+
+## Recent Architecture Improvements
+
+### 🔧 Code Organization Optimization
+- **Utils Folder Restructured**: Consolidated from 6 files to 5 clean, semantically named utilities
+- **Function Consolidation**: Merged resume text building functions into `resume_processor.py`
+- **Semantic Naming**: Renamed files for better clarity:
+  - `skill_extraction.py` → `skill_analysis.py` (better reflects analysis capabilities)
+  - `session_validators.py` → `session_helpers.py` (reflects mixed validation/getter responsibilities)
+- **Version Cleanup**: Removed all version artifacts (v1, v2, v3, v4, v5, v6) from codebase
+- **Duplicate Elimination**: Consolidated redundant OpenAI functions across modules
+
+### 🎯 Production Readiness
+- **Clean File Structure**: Optimal organization for maintainability and developer experience
+- **No Technical Debt**: All legacy code, unused imports, and development artifacts removed
+- **Streamlined Processing**: Simplified data flow with consolidated utility functions
+- **Professional Codebase**: Version-free, artifact-free production-ready code
 
 ## Contributing
 

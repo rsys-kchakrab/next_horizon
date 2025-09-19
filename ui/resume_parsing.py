@@ -13,7 +13,7 @@ except Exception:
 
 def render():
     st.subheader("Upload Resume")
-    up = st.file_uploader("Upload Resume", type=["pdf","docx","txt"], key="resume_v5_mod", label_visibility="hidden")
+    up = st.file_uploader("Upload Resume", type=["pdf","docx","txt"], key="resume_uploader", label_visibility="hidden")
     c1, c2 = st.columns(2)
     with c1:
         run = st.button("🚀 Run Extraction & Parsing", disabled=up is None)
@@ -80,7 +80,7 @@ def render():
                 st.session_state.structured_json = sj
                 st.rerun()
         
-        with st.form("edit_form_mod_v6"):
+        with st.form("edit_form"):
             # 1. Professional Summary
             st.markdown("### 1. Professional Summary")
             summary = st.text_area("Professional Summary",
