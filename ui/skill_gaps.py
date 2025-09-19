@@ -3,13 +3,13 @@
 from __future__ import annotations
 import streamlit as st
 import pandas as pd
-from utils.skill_extraction import (
+from utils.skill_analysis import (
     extract_skills_from_jd_text, 
     extract_skills_from_aspirations, 
     get_required_skills_for_role, 
     calculate_skill_gaps
 )
-from utils.session_validators import (
+from utils.session_helpers import (
     validate_role_selected,
     get_jd_dataframe,
     get_candidate_skills,

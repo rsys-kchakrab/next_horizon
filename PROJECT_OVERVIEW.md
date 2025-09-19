@@ -137,9 +137,9 @@ from ui.course_recommendations import render_course_recommendations
 
 # Core utilities
 from utils.resume_processor import process_resume
-from utils.skill_extraction import extract_skills_from_jd_text, calculate_skill_gaps
+from utils.skill_analysis import extract_skills_from_jd_text, calculate_skill_gaps
 from utils.skill_clarification import generate_clarification_questions
-from utils.session_validators import validate_role_selected
+from utils.session_helpers import validate_role_selected
 from utils.data_enhancer import backfill_from_text
 
 # AI integration

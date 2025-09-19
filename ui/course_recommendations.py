@@ -4,8 +4,8 @@ from __future__ import annotations
 import streamlit as st
 import pandas as pd
 from typing import Dict, List, Any
-from utils.skill_extraction import get_required_skills_for_role, calculate_skill_gaps
-from utils.session_validators import (
+from utils.skill_analysis import get_required_skills_for_role, calculate_skill_gaps
+from utils.session_helpers import (
     validate_skill_gaps_completed, 
     get_jd_dataframe, 
     get_training_dataframe,
@@ -14,90 +14,7 @@ from utils.session_validators import (
     get_current_role,
     get_skill_gaps
 )
-
-def openai_rank_training_courses(gaps: List[str], resume_text: str, training_df, top_k: int = 5) -> Dict[str, List[Dict[str, Any]]]:
-    """
-    Use OpenAI to rank courses from training database based on skill gaps and resume.
-    """
-    import os
-    import numpy as np
-    
-    if training_df.empty or not gaps:
-        return {}
-    
-    # Get OpenAI API key
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY environment variable.")
-    
-    recommendations = {}
-    
-    for gap in gaps:
-        gap_lower = str(gap).lower().strip()
-        if not gap_lower:
-            continue
-        
-        # Filter courses relevant to this skill gap
-        relevant_courses = training_df[
-            training_df['skill'].str.lower().str.contains(gap_lower, na=False) |
-            training_df['title'].str.lower().str.contains(gap_lower, na=False) |
-            training_df['description'].str.lower().str.contains(gap_lower, na=False)
-        ].copy()
-        
-        if relevant_courses.empty:
-            continue
-        
-        # Prepare course descriptions for ranking
-        course_descriptions = []
-        for _, row in relevant_courses.iterrows():
-            desc = f"{row.get('title', '')} {row.get('description', '')} {row.get('skill', '')}"
-            course_descriptions.append(desc)
-        
-        # Create user context
-        user_context = f"Resume: {resume_text[:1000]} Skill Gap: {gap}"
-        
-        # Use OpenAI for intelligent ranking
-        try:
-            from openai import OpenAI
-            client = OpenAI(api_key=api_key)
-            model = "text-embedding-3-small"
-            
-            # Get embeddings
-            user_emb = client.embeddings.create(model=model, input=user_context).data[0].embedding
-            course_embs = client.embeddings.create(model=model, input=course_descriptions).data
-            
-            # Calculate similarities
-            scores = []
-            for course_emb in course_embs:
-                similarity = np.dot(user_emb, course_emb.embedding) / (
-                    np.linalg.norm(user_emb) * np.linalg.norm(course_emb.embedding) + 1e-9
-                )
-                scores.append(float(similarity))
-                
-        except Exception as e:
-            raise RuntimeError(f"OpenAI API error: {str(e)}. Please check your API key and connection.")
-        
-        # Rank and select top courses
-        course_scores = list(zip(relevant_courses.iterrows(), scores))
-        course_scores.sort(key=lambda x: x[1], reverse=True)
-        
-        top_courses = []
-        for (_, course), score in course_scores[:top_k]:
-            top_courses.append({
-                'title': str(course.get('title', 'Unknown Course')),
-                'provider': str(course.get('provider', 'Unknown')),
-                'link': str(course.get('link', '')),
-                'hours': course.get('hours'),
-                'price': str(course.get('price', 'unknown')),
-                'rating': course.get('rating'),
-                'match_percent': round(float(score * 100), 1),
-                'match_type': 'ai_ranked'
-            })
-        
-        if top_courses:
-            recommendations[gap] = top_courses
-    
-    return recommendations
+from ai.openai_client import openai_rank_courses
 
 def render():
     # Check if we have necessary data
@@ -146,45 +63,57 @@ def render():
         if st.button("🚀 Find Courses", key="btn_openai_training"):
             with st.spinner("Using vector search to find the best courses from training database..."):
                 resume_text = get_resume_text()
-                recs = openai_rank_training_courses(gaps, resume_text, training_df, top_k=5)
-                    
-                if recs:
-                    for gap, courses in recs.items():
-                        if courses:
-                            st.markdown(f"### {gap} ({len(courses)} courses)")
+                
+                # Filter courses relevant to skill gaps
+                relevant_courses = training_df.copy()
+                for gap in gaps:
+                    gap_lower = str(gap).lower().strip()
+                    if gap_lower:
+                        mask = (
+                            training_df['skill'].str.lower().str.contains(gap_lower, na=False) |
+                            training_df['title'].str.lower().str.contains(gap_lower, na=False) |
+                            training_df['description'].str.lower().str.contains(gap_lower, na=False)
+                        )
+                        if mask.any():
+                            gap_courses = training_df[mask].copy()
+                            # Convert DataFrame to list of dictionaries for openai_rank_courses
+                            gap_courses_list = gap_courses.to_dict('records')
+                            # Use consolidated function for each skill gap
+                            recs = openai_rank_courses([gap], resume_text, gap_courses_list, top_k=5)
                             
-                            for course in courses:
-                                title = course.get('title', 'Unknown Course')
-                                provider = course.get('provider', 'Unknown')
-                                link = course.get('link', '')
-                                hours = course.get('hours')
-                                price = course.get('price', 'unknown')
-                                rating = course.get('rating')
-                                match_percent = course.get('match_percent', 0)
+                            if recs:
+                                st.markdown(f"### {gap} ({len(recs)} courses)")
                                 
-                                # Create course display
-                                col1, col2, col3 = st.columns([3, 1, 1])
-                                
-                                with col1:
-                                    if link:
-                                        st.markdown(f"🤖 [{title}]({link}) - **{provider}**")
-                                    else:
-                                        st.markdown(f"🤖 {title} - **{provider}**")
-                                
-                                with col2:
-                                    if hours:
-                                        st.caption(f"⏱️ {hours}h")
-                                    if price and price != 'unknown':
-                                        st.caption(f"💰 {price}")
-                                
-                                with col3:
-                                    if rating:
-                                        st.caption(f"⭐ {rating}")
-                                    st.caption(f"🧠 {match_percent}% Vector Match")
-                                
-                                st.divider()
-                else:
-                    st.info("No courses found in the training database for the identified skill gaps.")
+                                for course in recs:
+                                    title = course.get('title', 'Unknown Course')
+                                    provider = course.get('provider', 'Unknown')
+                                    link = course.get('link', '')
+                                    hours = course.get('hours')
+                                    price = course.get('price', 'unknown')
+                                    rating = course.get('rating')
+                                    match_percent = course.get('match_percent', 0)
+                                    
+                                    # Create course display
+                                    col1, col2, col3 = st.columns([3, 1, 1])
+                                    
+                                    with col1:
+                                        if link:
+                                            st.markdown(f"🤖 [{title}]({link}) - **{provider}**")
+                                        else:
+                                            st.markdown(f"🤖 {title} - **{provider}**")
+                                    
+                                    with col2:
+                                        if hours:
+                                            st.caption(f"⏱️ {hours}h")
+                                        if price and price != 'unknown':
+                                            st.caption(f"💰 {price}")
+                                    
+                                    with col3:
+                                        if rating:
+                                            st.caption(f"⭐ {rating}")
+                                        st.caption(f"🧠 {match_percent}% Vector Match")
+                                    
+                                    st.divider()
     else:
         st.warning("⚠️ **No training database available.**")
         st.info("Please upload training_database.csv in the left panel (sidebar) to use vector search recommendations.")

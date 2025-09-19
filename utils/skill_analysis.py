@@ -1,4 +1,4 @@
-# FILE: utils/skill_extraction.py
+# FILE: utils/skill_analysis.py - Skill Extraction and Gap Analysis
 from __future__ import annotations
 import re
 import pandas as pd

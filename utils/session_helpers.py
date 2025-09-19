@@ -1,4 +1,4 @@
-# FILE: utils/session_validators.py
+# FILE: utils/session_helpers.py - Session State Management and Validation
 from __future__ import annotations
 import streamlit as st
 import pandas as pd

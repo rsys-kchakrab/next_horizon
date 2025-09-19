@@ -5,7 +5,7 @@ import streamlit as st
 import pandas as pd
 
 from ai.openai_client import openai_rank_roles, openai_rank_jds
-from utils.resume_text_builder import build_resume_text
+from utils.resume_processor import build_resume_text
 
 def _get_resume_text() -> str:
     """Get resume text using the utility function"""

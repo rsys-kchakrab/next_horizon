@@ -94,7 +94,16 @@ def openai_rank_courses(gaps, resume_text: str, snippets: List[Dict[str, Any]], 
     """Rank course snippets against the user's gaps + resume using OpenAI embeddings"""
     gaps = [str(g) for g in (gaps or []) if str(g).strip()]
     bundle = " ".join(gaps + [resume_text or ""]).strip()
-    docs = [str(s.get("snippet", "")) for s in (snippets or [])]
+    
+    # Handle both training course format and general snippet format
+    docs = []
+    for s in (snippets or []):
+        if isinstance(s, dict):
+            # For training courses, use description as the text to embed
+            snippet_text = s.get("description", "") or s.get("snippet", "") or s.get("title", "")
+            docs.append(str(snippet_text))
+        else:
+            docs.append(str(s))
 
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -118,12 +127,14 @@ def openai_rank_courses(gaps, resume_text: str, snippets: List[Dict[str, Any]], 
     
     out = []
     for r, sc in pairs[:max(1, int(top_k))]:
+        # Handle both training course format and general snippet format
         title = r.get("title", "Course")
         link = r.get("link", "")
-        prov = r.get("source", "")
+        provider = r.get("provider", "") or r.get("source", "")
+        
         out.append({
             "title": title,
-            "provider": prov,
+            "provider": provider,
             "link": link,
             "match_percent": round(float(sc * 100.0), 1)
         })
